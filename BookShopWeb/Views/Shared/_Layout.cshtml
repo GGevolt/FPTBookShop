@@ -32,6 +32,9 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="Admin" asp-controller="Category" asp-action="Index">Category</a>
                             </li>
+                        }
+                        else if (User.IsInRole("StoreOwner"))
+                        {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="Admin" asp-controller="Book" asp-action="Index">Book</a>
                             </li>

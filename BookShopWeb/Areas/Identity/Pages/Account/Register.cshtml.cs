@@ -107,6 +107,7 @@ namespace FPTBookShopWeb.Areas.Identity.Pages.Account
             {
                 _roleManager.CreateAsync(new IdentityRole("Customer")).GetAwaiter().GetResult();
                 _roleManager.CreateAsync(new IdentityRole("Admin")).GetAwaiter().GetResult();
+                _roleManager.CreateAsync(new IdentityRole("StoreOwner")).GetAwaiter().GetResult();
             }
             Input = new()
             {
