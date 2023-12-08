@@ -5,12 +5,14 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using FPTBookShopWeb.Utility;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.WebHost.ConfigureKestrel(c =>
 {
-    c.Limits.KeepAliveTimeout = TimeSpan.FromMinutes(15);
+    c.Limits.KeepAliveTimeout = TimeSpan.FromMinutes(20);
 });
 // Add services to the container.
 builder.Services.AddControllersWithViews();

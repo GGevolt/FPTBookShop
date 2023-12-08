@@ -23,11 +23,6 @@ namespace FPTBookShopWeb.Areas.Admin.Controllers
             List<Category> categories = _unitOfWork.CategoryRepository.GetAll().ToList();
             return View(categories);
         }
-
-        public IActionResult Details()
-        {
-            return View();
-        }
         public IActionResult Create()
         {
             return View();
@@ -98,6 +93,11 @@ namespace FPTBookShopWeb.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Delete(Category category)
         {
+            var bookCate = _unitOfWork.BookCategoryRepository.GetAll().Where(bc => bc.CategoryId == category.ID).ToList();
+            foreach (var bookCategory in bookCate)
+            {
+                _unitOfWork.BookCategoryRepository.Remove(bookCategory);
+            }
             _unitOfWork.CategoryRepository.Remove(category);
             _unitOfWork.Save();
             TempData["success"] = "Category deleted succesfully";

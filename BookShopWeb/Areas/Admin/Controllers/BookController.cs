@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System.Net;
 
 namespace FPTBookShopWeb.Areas.Admin.Controllers
 {
@@ -29,21 +30,28 @@ namespace FPTBookShopWeb.Areas.Admin.Controllers
         }
         public IActionResult CreateUpdate(int? id)
         {
-			BookVM bookVM= new BookVM
-			{
-				Book = new Book(),
-				Categories = _unitOfWork.CategoryRepository.GetAll().ToList()
-			};
 			if (id == null || id == 0)
             {
-                //Create new Book
-                return View(bookVM);
+				BookVM bookCreateVM = new BookVM
+				{
+					Book = new Book(),
+					Categories = _unitOfWork.CategoryRepository.GetAll().ToList()
+				};
+				//Create new Book
+				return View(bookCreateVM);
             }
             else
             {
+				BookVM bookUpdateVM = new BookVM
+				{
+					Book = _unitOfWork.BookRepository.Get(book => book.ID == id),
+					Categories = _unitOfWork.CategoryRepository.GetAll().ToList(),
+					SelectedCategories = _unitOfWork.BookCategoryRepository.GetAll().Where(bc => bc.BookId == id).Select(bc => bc.CategoryId).ToList()
+			};
 				//Update a Book
-				bookVM.Book = _unitOfWork.BookRepository.Get(book => book.ID == id);
-                return View(bookVM);
+				bookUpdateVM.Book = _unitOfWork.BookRepository.Get(book => book.ID == id);
+
+				return View(bookUpdateVM);
             }
 
         }
@@ -101,20 +109,26 @@ namespace FPTBookShopWeb.Areas.Admin.Controllers
                 {
                     _unitOfWork.BookRepository.Update(bookVM.Book);
                     _unitOfWork.Save();
-                    var existingBook = _unitOfWork.BookRepository.Get(b => b.ID == bookVM.Book.ID, "BookCategories");
-                    _unitOfWork.BookCategoryRepository.RemoveRange(existingBook.BookCategories);
-                    if (bookVM.SelectedCategories != null && bookVM.SelectedCategories.Count > 0)
+					var PastBookCategories = _unitOfWork.BookCategoryRepository.GetAll().Where(bc => bc.BookId == bookVM.Book.ID).ToList();
+					foreach (var bookCategory in PastBookCategories)
+					{
+                        _unitOfWork.BookCategoryRepository.Remove(bookCategory);
+					}
+
+					if (bookVM.SelectedCategories != null && bookVM.SelectedCategories.Count > 0)
                     {
                         foreach (int categoryId in bookVM.SelectedCategories)
                         {
                             var category = _unitOfWork.CategoryRepository.Get(c => c.ID == categoryId);
                             if (category != null)
                             {
-                                existingBook.BookCategories.Add(new BookCategory
-                                {
-                                    CategoryId = category.ID
-                                });
-                            }
+								var bookCategory = new BookCategory
+								{
+									BookId = bookVM.Book.ID,
+									CategoryId = category.ID
+								};
+								_unitOfWork.BookCategoryRepository.Add(bookCategory);
+							}
                         }
                         _unitOfWork.Save();
                     }
@@ -131,9 +145,6 @@ namespace FPTBookShopWeb.Areas.Admin.Controllers
 				};
 				return View(bookNewVM);
             }
-
-
-
         }
         public IActionResult Delete(int? id)
         {
@@ -151,8 +162,8 @@ namespace FPTBookShopWeb.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult Delete(Book book)
         {
-            var existingBook = _unitOfWork.BookRepository.Get(b => b.ID == book.ID, "BookCategories");
-            string wwwRootPath = _webhost.WebRootPath;
+            var bookCate = _unitOfWork.BookCategoryRepository.GetAll().Where(bc => bc.BookId == book.ID).ToList();
+			string wwwRootPath = _webhost.WebRootPath;
             if (!string.IsNullOrEmpty(book.Book_Image))
             {
                 //Delete old image
@@ -162,8 +173,11 @@ namespace FPTBookShopWeb.Areas.Admin.Controllers
                     System.IO.File.Delete(oldImagePath);
                 }
             }
-            _unitOfWork.BookCategoryRepository.RemoveRange(existingBook.BookCategories);
-            _unitOfWork.BookRepository.Remove(book);
+			foreach (var bookCategory in bookCate)
+			{
+				_unitOfWork.BookCategoryRepository.Remove(bookCategory);
+			}
+			_unitOfWork.BookRepository.Remove(book);
             _unitOfWork.Save();
             TempData["success"] = "Book deleted succesfully";
             return RedirectToAction("Index");

@@ -1,6 +1,8 @@
 ﻿using FPTBookShopWeb.Data;
 using FPTBookShopWeb.Models;
 using FPTBookShopWeb.Repository.IRepository;
+using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.EntityFrameworkCore;
 
 namespace FPTBookShopWeb.Repository
 {
@@ -16,5 +18,5 @@ namespace FPTBookShopWeb.Repository
         {
             _dbContext.Update(bookCategory);
         }
-    }
+	}
 }

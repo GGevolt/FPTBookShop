@@ -3,7 +3,7 @@
 <form method="post" enctype="multipart/form-data">
     <div class="border p-3 mt-4">
         <input asp-for="Book.ID" hidden />
-        @* <input asp-for="Book.Book_Image" hidden /> *@
+        <input asp-for="Book.Book_Image" hidden />
         <div class="row">
             <div class="col-10">
                 <div class="row mb-3">
@@ -26,10 +26,9 @@
                     @for (int i = 0; i < Model.Categories.Count; i++)
                     {
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="Category_@i" name="SelectedCategories" value="@Model.Categories[i].ID">
+                            <input class="form-check-input" type="checkbox" id="Category_@i" name="SelectedCategories" value="@Model.Categories[i].ID" @(Model.SelectedCategories != null ? (Model.SelectedCategories.Contains(Model.Categories[i].ID) ? "checked" : "") : "")>
                             <label class="form-check-label" for="Category_@i">@Model.Categories[i].Name</label>
                         </div>
-
                     }
                 </div>
                 <div class="row mb-3">

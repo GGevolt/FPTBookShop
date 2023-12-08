@@ -8,8 +8,8 @@
             <input asp-for="Title" disabled>
         </div>
         <div class="col-2">
-            <label asp-for="Book_Image"></label>
-            <img src="Book_Image" width="100%" />
+            <label asp-for="Book_Image"></label><br/>
+            <img src="@Model.Book_Image" width="80%" height="70%" alt="Image">
         </div>
         <div class="row mb-3">
             <label asp-for="Description"></label>
