@@ -1,0 +1,54 @@
+﻿@model List<Book>
+<partial name="_Notification" />
+<div class="row pt-4 pb-4">
+	<div class="col-9">
+		<h2>List of Books</h2>
+	</div>
+	<div class="col-3">
+		<a asp-controller="Book" asp-action="CreateUpdate" class="btn btn-primary">Create new Book</a>
+	</div>
+</div>
+<div>
+	<table class="table table-bordered">
+		<thead>
+			<tr>
+				<th>Book Image</th>
+				<th>Book Title</th>
+				<th>Description</th>
+				<th>Author</th>
+				<th>Price</th>
+				<th>Quantity</th>
+				<th>Categories</th> 
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var Book in Model)
+			{
+				<tr>
+					<td>@Book.Book_Image</td>
+					<td>@Book.Title</td>
+					<td>@Book.Description</td>
+					<td>@Book.Author</td>
+					<td>@Book.Price</td>
+					<td>@Book.Quantity</td>
+					<td>
+						@foreach (var category in Book.BookCategories.Select(bc => bc.Category))
+						{
+							@category.Name <br />
+						}
+					</td>
+					<td>
+						<div class="btn group" role="group">
+							<a asp-controller="Book" asp-action="CreateUpdate" asp-route-id="@Book.ID" class="btn btn-primary">
+								<i class="bi bi-pencil"></i> Edit
+							</a>
+							<a asp-controller="Book" asp-action="Delete" asp-route-id="@Book.ID" class="btn text-danger">
+								<i class="bi bi-trash-fill"></i> Delete
+							</a>
+						</div>
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+</div>

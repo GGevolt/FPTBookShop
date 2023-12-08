@@ -1,0 +1,75 @@
+﻿@model BookVM
+<h1> @(Model.Book.ID ==0?"Create":"Edit") a Book</h1>
+<form method="post" enctype="multipart/form-data">
+    <div class="border p-3 mt-4">
+        <input asp-for="Book.ID" hidden />
+        @* <input asp-for="Book.Book_Image" hidden /> *@
+        <div class="row">
+            <div class="col-10">
+                <div class="row mb-3">
+                    <label asp-for="Book.Title"></label>
+                    <input asp-for="Book.Title">
+                    <span asp-validation-for="Book.Title" class="text-danger"></span>
+                </div>
+                <div class="row mb-3">
+                    <label asp-for="Book.Description"></label>
+                    <input asp-for="Book.Description">
+                    <span asp-validation-for="Book.Description" class="text-danger"></span>
+                </div>
+                <div class="row mb-3">
+                    <label asp-for="Book.Author"></label>
+                    <input asp-for="Book.Author">
+                    <span asp-validation-for="Book.Author" class="text-danger"></span>
+                </div>
+                <div class="row mb-3">
+                    <label>Categories</label>
+                    @for (int i = 0; i < Model.Categories.Count; i++)
+                    {
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="Category_@i" name="SelectedCategories" value="@Model.Categories[i].ID">
+                            <label class="form-check-label" for="Category_@i">@Model.Categories[i].Name</label>
+                        </div>
+
+                    }
+                </div>
+                <div class="row mb-3">
+                    <label asp-for="Book.Price"></label>
+                    <input asp-for="Book.Price">
+                    <span asp-validation-for="Book.Price" class="text-danger"></span>
+                 </div>
+                <div class="row mb-3">
+                    <label asp-for="Book.Quantity"></label>
+                    <input asp-for="Book.Quantity">
+                    <span asp-validation-for="Book.Quantity" class="text-danger"></span>
+                </div>
+                <div class="row mb-3">
+                    <label asp-for="Book.Book_Image"></label>
+                    <input type="file" name="file" class="form-control">
+                 </div>
+             </div>
+             <div class="col-2">
+                <img src="@Model.Book.Book_Image" width="100%" />
+             </div>
+        </div>
+        <div class="btn group" role="group">
+            @if (Model.Book.ID == 0)
+            {
+                <button type="submit" class="btn btn-primary">Create</button>
+            }
+            else
+            {
+                <button type="submit" class="btn btn-primary">Update</button>
+            }
+            
+            <a asp-controller="Book" asp-action="Index" class="btn btn-primary">
+                Back to List
+            </a>
+        </div>
+    </div>
+</form>
+
+@section Scripts{
+    @{
+        <partial name = "_ValidationScriptsPartial"/>
+    }
+}
