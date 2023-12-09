@@ -1,6 +1,6 @@
-using FPTBookShopWeb.Data;
-using FPTBookShopWeb.Repository;
-using FPTBookShopWeb.Repository.IRepository;
+using FPTBookShop.DataAccess;
+using FPTBookShop.DataAccess.Repository;
+using FPTBookShop.DataAccess.Repository.IRepository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using FPTBookShopWeb.Utility;

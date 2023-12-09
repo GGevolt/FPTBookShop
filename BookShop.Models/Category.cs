@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 
 
-namespace FPTBookShopWeb.Models
+namespace FPTBookShop.Models
 {
 	public class Category
 	{
@@ -14,5 +14,7 @@ namespace FPTBookShopWeb.Models
 		public string Description { get; set; }
 
 		public virtual ICollection<BookCategory>? BookCategories { get; set; }
+		public ApplicationUser ApplicationUser { get; set; }
+		public int UserId { get; set; }
 	}
 }

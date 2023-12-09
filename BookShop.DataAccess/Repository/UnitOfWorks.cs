@@ -1,7 +1,7 @@
-﻿using FPTBookShopWeb.Data;
-using FPTBookShopWeb.Repository.IRepository;
+﻿using FPTBookShop.DataAccess;
+using FPTBookShop.DataAccess.Repository.IRepository;
 
-namespace FPTBookShopWeb.Repository
+namespace FPTBookShop.DataAccess.Repository
 {
     public class UnitOfWorks : IUnitOfWork
     {
@@ -10,6 +10,7 @@ namespace FPTBookShopWeb.Repository
 
         public IBookRepository BookRepository { get; private set; }
         public IBookCategoryRepository BookCategoryRepository { get; private set; }
+        public IRequestRepository RequestRepository { get; private set; }
 
         public UnitOfWorks(ApplicationDBContext dBContext)
         {
@@ -17,6 +18,7 @@ namespace FPTBookShopWeb.Repository
             CategoryRepository = new CategoryRepository(dBContext);
             BookRepository = new BookRepository(dBContext);
             BookCategoryRepository = new BookCategoryRepository(dBContext);
+            RequestRepository = new RequestRepository(dBContext);
         }
 
         public void Save()

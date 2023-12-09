@@ -1,6 +1,6 @@
-﻿using FPTBookShopWeb.Models;
-
-namespace FPTBookShopWeb.Repository.IRepository
+﻿using FPTBookShop.Models;
+                                                
+namespace FPTBookShop.DataAccess.Repository.IRepository
 {
     public interface ICategoryRepository:IRepository<Category>
     {

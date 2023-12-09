@@ -1,10 +1,10 @@
-﻿using FPTBookShopWeb.Data;
-using FPTBookShopWeb.Repository.IRepository;
+﻿using FPTBookShop.DataAccess;
+using FPTBookShop.DataAccess.Repository.IRepository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
-namespace FPTBookShopWeb.Repository
+namespace FPTBookShop.DataAccess.Repository
 {
     public class Repository<T> : IRepository<T> where T : class
     {

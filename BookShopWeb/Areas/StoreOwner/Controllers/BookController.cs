@@ -1,8 +1,8 @@
-﻿using FPTBookShopWeb.Data;
-using FPTBookShopWeb.Models;
-using FPTBookShopWeb.Models.ViewModel;
-using FPTBookShopWeb.Repository;
-using FPTBookShopWeb.Repository.IRepository;
+﻿using FPTBookShop.DataAccess;
+using FPTBookShop.Models;
+using FPTBookShop.Models.ViewModel;
+using FPTBookShop.DataAccess.Repository;
+using FPTBookShop.DataAccess.Repository.IRepository;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;

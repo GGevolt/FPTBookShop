@@ -1,9 +1,9 @@
-﻿using FPTBookShopWeb.Data;
-using FPTBookShopWeb.Models;
-using FPTBookShopWeb.Repository.IRepository;
+﻿using FPTBookShop.DataAccess;
+using FPTBookShop.Models;
+using FPTBookShop.DataAccess.Repository.IRepository;
 using Microsoft.EntityFrameworkCore;
 
-namespace FPTBookShopWeb.Repository
+namespace FPTBookShop.DataAccess.Repository
 {
     public class CategoryRepository:Repository<Category>,ICategoryRepository
     {

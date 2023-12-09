@@ -1,4 +1,4 @@
-namespace FPTBookShopWeb.Models
+namespace FPTBookShop.Models
 {
 	public class ErrorViewModel
 	{

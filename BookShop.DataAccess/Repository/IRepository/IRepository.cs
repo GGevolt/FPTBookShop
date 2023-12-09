@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 
-namespace FPTBookShopWeb.Repository.IRepository
+namespace FPTBookShop.DataAccess.Repository.IRepository
 {
     public interface IRepository<T> where T : class
     {

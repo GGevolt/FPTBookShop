@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace FPTBookShopWeb.Models.ViewModel
+namespace FPTBookShop.Models.ViewModel
 {
     public class BookVM
     {

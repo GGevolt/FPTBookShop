@@ -1,8 +1,8 @@
-﻿using FPTBookShopWeb.Models;
+﻿using FPTBookShop.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace FPTBookShopWeb.Data
+namespace FPTBookShop.DataAccess
 {
 	public class ApplicationDBContext : IdentityDbContext
 	{
