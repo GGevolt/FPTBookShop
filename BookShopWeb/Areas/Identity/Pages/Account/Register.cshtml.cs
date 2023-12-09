@@ -69,6 +69,12 @@ namespace FPTBookShopWeb.Areas.Identity.Pages.Account
         /// </summary>
         public class InputModel
         {
+            [Required]
+            [Display(Name = "Full Name")]
+            public string Full_Name { get; set; }
+            [Required]
+            [Display(Name = "Home address")]
+            public string Address { get; set; }
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
@@ -109,6 +115,7 @@ namespace FPTBookShopWeb.Areas.Identity.Pages.Account
                 _roleManager.CreateAsync(new IdentityRole("Admin")).GetAwaiter().GetResult();
                 _roleManager.CreateAsync(new IdentityRole("StoreOwner")).GetAwaiter().GetResult();
             }
+            
             Input = new()
             {
                 RoleList = _roleManager.Roles.Select(x => x.Name).Select(i => new SelectListItem
@@ -126,7 +133,7 @@ namespace FPTBookShopWeb.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = CreateUser();
+                var user = new ApplicationUser { Full_Name = Input.Full_Name, Address = Input.Address };
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
