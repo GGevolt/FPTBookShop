@@ -17,8 +17,14 @@ namespace FPTBookShopWeb.Areas.Customer.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        public IActionResult Index()
+        [HttpGet]
+        public IActionResult Index(string? search)
         {
+            if (!string.IsNullOrEmpty(search))
+            {
+                search = search.ToLower();
+                return View(_unitOfWork.BookRepository.GetAll("BookCategories.Category").Where(b => b.Title.ToLower().Contains(search) || b.Author.ToLower().Contains(search)).ToList());
+            }
             List<Book> books = _unitOfWork.BookRepository.GetAll("BookCategories.Category").ToList();
             return View(books);
         }
