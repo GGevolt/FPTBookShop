@@ -4,6 +4,7 @@ using FPTBookShop.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FPTBookShop.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    partial class ApplicationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20231209055800_seed4")]
+    partial class seed4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -79,6 +82,9 @@ namespace FPTBookShop.DataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -87,7 +93,12 @@ namespace FPTBookShop.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
                     b.HasKey("ID");
+
+                    b.HasIndex("ApplicationUserId");
 
                     b.ToTable("Categories");
 
@@ -96,31 +107,36 @@ namespace FPTBookShop.DataAccess.Migrations
                         {
                             ID = 1,
                             Description = "A lot of roman stories",
-                            Name = "Romansss"
+                            Name = "Romansss",
+                            UserId = 0
                         },
                         new
                         {
                             ID = 2,
                             Description = "Show you how is an action",
-                            Name = "Action"
+                            Name = "Action",
+                            UserId = 0
                         },
                         new
                         {
                             ID = 3,
                             Description = "So scary",
-                            Name = "Horror"
+                            Name = "Horror",
+                            UserId = 0
                         },
                         new
                         {
                             ID = 4,
                             Description = "For anyone who loves science",
-                            Name = "Science"
+                            Name = "Science",
+                            UserId = 0
                         },
                         new
                         {
                             ID = 5,
                             Description = "You can know alot about the world",
-                            Name = "History"
+                            Name = "History",
+                            UserId = 0
                         });
                 });
 
@@ -394,6 +410,15 @@ namespace FPTBookShop.DataAccess.Migrations
                     b.Navigation("Book");
 
                     b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("FPTBookShop.Models.Category", b =>
+                {
+                    b.HasOne("FPTBookShop.Models.ApplicationUser", "ApplicationUser")
+                        .WithMany()
+                        .HasForeignKey("ApplicationUserId");
+
+                    b.Navigation("ApplicationUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

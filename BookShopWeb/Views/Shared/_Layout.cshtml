@@ -32,11 +32,17 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="Admin" asp-controller="Category" asp-action="Index">Category</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="Admin" asp-controller="CategoryApproval" asp-action="Index">Request</a>
+                            </li>
                         }
                         else if (User.IsInRole("StoreOwner"))
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="StoreOwner" asp-controller="Book" asp-action="Index">Book</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="StoreOwner" asp-controller="CategoryRequest" asp-action="Index">Add request</a>
                             </li>
                         }
                     </ul>

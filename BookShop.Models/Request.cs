@@ -7,14 +7,12 @@ namespace FPTBookShop.Models
     {
         [Key]
         public int ID { get; set; }
-        public DateTime Request_Date { get; set; }
+        public DateTime Request_Date { get; set; } = DateTime.UtcNow;
         public string Request_Name { get; set;}
         public string Request_Description { get; set;}
 
         public string Status { get; set;}
 
         public string UserId { get; set;}
-
-
     }
 }
