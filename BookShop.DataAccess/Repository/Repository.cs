@@ -27,7 +27,7 @@ namespace FPTBookShop.DataAccess.Repository
             query = query.Where(filter);
             if (!String.IsNullOrEmpty(includeProperty))
             {
-				query.Include(includeProperty);
+				query = query.Include(includeProperty);
             }
             return query.FirstOrDefault();
         }
@@ -38,7 +38,7 @@ namespace FPTBookShop.DataAccess.Repository
             IQueryable<T> query = dbSet;
             if (!String.IsNullOrEmpty(includeProperty))
             {
-				query.Include(includeProperty);
+				query = query.Include(includeProperty);
             }
             return query.ToList();
         }

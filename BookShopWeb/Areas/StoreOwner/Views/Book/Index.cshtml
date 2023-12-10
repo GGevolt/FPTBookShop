@@ -32,9 +32,12 @@
 					<td>@Book.Price</td>
 					<td>@Book.Quantity</td>
 					<td>
-						@foreach (var category in Book.BookCategories.Select(bc => bc.Category))
+						@if (Book.BookCategories != null)
 						{
-							@category.Name <br />
+							@foreach (var category in Book.BookCategories.Select(bc => bc.Category))
+							{
+								@category.Name <br />
+							}
 						}
 					</td>
 					<td>
