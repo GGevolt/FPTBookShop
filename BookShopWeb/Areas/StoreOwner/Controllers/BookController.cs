@@ -15,7 +15,6 @@ namespace FPTBookShopWeb.Areas.StoreOwner.Controllers
     [Authorize(Roles = "StoreOwner")]
     public class BookController : Controller
     {
-        //private readonly ApplicationDBContext _dbContext;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IWebHostEnvironment _webhost;
         public BookController(IUnitOfWork unitOfWork, IWebHostEnvironment webhost)
