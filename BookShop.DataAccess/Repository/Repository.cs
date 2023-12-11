@@ -2,6 +2,7 @@
 using FPTBookShop.DataAccess.Repository.IRepository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq.Expressions;
 
 namespace FPTBookShop.DataAccess.Repository
@@ -26,7 +27,7 @@ namespace FPTBookShop.DataAccess.Repository
             query = query.Where(filter);
             if (!String.IsNullOrEmpty(includeProperty))
             {
-                query = query.Include(includeProperty);
+				query = query.Include(includeProperty);
             }
             return query.FirstOrDefault();
         }
@@ -37,12 +38,12 @@ namespace FPTBookShop.DataAccess.Repository
             IQueryable<T> query = dbSet;
             if (!String.IsNullOrEmpty(includeProperty))
             {
-                query = query.Include(includeProperty);
+				query = query.Include(includeProperty);
             }
             return query.ToList();
         }
 
-        public void Remove(T entity)
+		public void Remove(T entity)
         {
             dbSet.Remove(entity);
         }

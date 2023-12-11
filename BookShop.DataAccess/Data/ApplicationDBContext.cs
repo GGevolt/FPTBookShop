@@ -15,6 +15,9 @@ namespace FPTBookShop.DataAccess
         public DbSet<OrderDetail> OrderDetails { get; set; }
         public DbSet<OrderStatus> OrderStatuses { get; set; }
 		public DbSet<ShoppingCart> ShoppingCarts { get; set; }
+
+		public DbSet<Request> Requests { get; set; }
+
         public ApplicationDBContext(DbContextOptions<ApplicationDBContext> option):base(option)
 		{ 
 
@@ -35,8 +38,9 @@ namespace FPTBookShop.DataAccess
 				.HasOne(bc => bc.Category)
 				.WithMany(c => c.BookCategories)
 				.HasForeignKey(bc => bc.CategoryId);
+
             modelBuilder.Entity<Category>().HasData(
-				new Category { ID = 1, Name = "Romansss", Description = "A lot of roman stories" },
+				new Category { ID = 1, Name = "Romance", Description = "A lot of roman stories" },
 				new Category { ID = 2, Name = "Action", Description = "Show you how is an action"},
 				new Category { ID = 3, Name = "Horror", Description = "So scary"},
 				new Category { ID = 4, Name = "Science", Description = "For anyone who loves science" },

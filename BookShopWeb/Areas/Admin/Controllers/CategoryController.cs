@@ -11,8 +11,6 @@ namespace FPTBookShopWeb.Areas.Admin.Controllers
     [Authorize(Roles = "Admin")]
     public class CategoryController : Controller
     {
-        //private readonly ApplicationDBContext _dbContext
-        //private readonly ICategoryRepository _categoryRepository;
         private readonly IUnitOfWork _unitOfWork;
         public CategoryController(IUnitOfWork unitOfWork)
         {
@@ -103,5 +101,5 @@ namespace FPTBookShopWeb.Areas.Admin.Controllers
             TempData["success"] = "Category deleted succesfully";
             return RedirectToAction("Index");
         }
-    }
+	}
 }

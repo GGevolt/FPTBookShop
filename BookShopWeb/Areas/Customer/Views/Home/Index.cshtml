@@ -1,8 +1,32 @@
-﻿@{
+﻿@model List<Book>
+@{
     ViewData["Title"] = "Home Page";
 }
-
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<h2>Search</h2>
+<form method="get">
+    <div class="row"> 
+        <div class="col-md-8">
+            <input name="search" class="form-control" placeholder="Search by Title, Author"/>
+        </div>
+        <div class="col-md-4">
+            <button type="submit" class="btn-info">Search</button>
+        </div>
+    </div>
+</form>
+<section class="section">
+    <div class="container">
+        <div class="row g-3 g-lg-4">
+            @foreach (var Book in Model){
+                <div class="card" style="width: 18rem;">
+                    <img src="@Book.Book_Image" class="card-img-top" alt="Book image">
+                  <div class="card-body">
+                    <h5 class="card-title">@Book.Title</h5>
+                    <p class="card-text">@Book.Description</p>
+                    <h6 class="card-title">Price: @Book.Price $</h6>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                  </div>
+                </div>
+             }
+        </div>
+    </div>
+ </section>

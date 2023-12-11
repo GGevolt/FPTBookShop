@@ -12,7 +12,6 @@ namespace FPTBookShop.Models
 		[DisplayName("Category Name")]
 		public string Name { get; set; }
 		public string Description { get; set; }
-
 		public virtual ICollection<BookCategory>? BookCategories { get; set; }
 	}
 }
