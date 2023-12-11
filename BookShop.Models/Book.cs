@@ -9,11 +9,12 @@ namespace FPTBookShop.Models
         public string Title { get; set; }
         public string Description { get; set; }
         public string Author { get; set; }
-        [Range(1,1000)]
+        [Range(1, 1000)]
         public double Price { get; set; }
         public string? Book_Image { get; set; }
         public int Quantity { get; set; }
-		public virtual ICollection<BookCategory>? BookCategories { get; set; }
-	}
-
+        public virtual ICollection<BookCategory>? BookCategories { get; set; }
+        public virtual List<CartDetail> CartDetails { get; set; }
+        public virtual ICollection<OrderDetail> OrderDetails { get; set; }
+    }
 }

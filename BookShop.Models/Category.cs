@@ -14,7 +14,5 @@ namespace FPTBookShop.Models
 		public string Description { get; set; }
 
 		public virtual ICollection<BookCategory>? BookCategories { get; set; }
-		public ApplicationUser ApplicationUser { get; set; }
-		public int UserId { get; set; }
 	}
 }
