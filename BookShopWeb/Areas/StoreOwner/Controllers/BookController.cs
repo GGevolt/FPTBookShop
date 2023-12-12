@@ -58,9 +58,6 @@ namespace FPTBookShopWeb.Areas.StoreOwner.Controllers
 
         public IActionResult CreateUpdate(BookVM bookVM, IFormFile? file)
         {
-
-            if (ModelState.IsValid)
-            {
                 string wwwRootPath = _webhost.WebRootPath;
                 if (file != null)
                 {
@@ -134,16 +131,6 @@ namespace FPTBookShopWeb.Areas.StoreOwner.Controllers
                     TempData["success"] = "Book updated succesfully";
                 }
                 return RedirectToAction("Index");
-            }
-            else
-            {
-                BookVM bookNewVM = new BookVM
-                {
-                    Book = new Book(),
-                    Categories = _unitOfWork.CategoryRepository.GetAll().ToList()
-                };
-                return View(bookNewVM);
-            }
         }
         public IActionResult Delete(int? id)
         {

@@ -7,6 +7,7 @@ namespace FPTBookShop.Models.ViewModel
     {
         public Book Book { get; set; }
         public List<int>? SelectedCategories { get; set; }
+
         [ValidateNever]
         public List<Category> Categories { get; set; }
 	}

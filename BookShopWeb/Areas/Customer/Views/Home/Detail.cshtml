@@ -1,0 +1,45 @@
+﻿@* @model Book
+<h1>Book Detail</h1>
+    <div class="border p-3 mt-4">
+    <img src="@Model.Book_Image" width="100%" />
+        <div class="row">
+            <div class="col-10">
+                <div class="row mb-3">
+                    <h2>@Model.Title</h2>
+                </div>
+                <div class="row mb-3">
+                    <h4>@Model.Description</h4>
+                </div>
+                <div class="row mb-3">
+                    <h4>@Model.Price</h4>
+                </div>
+                <div class="row mb-3">
+                    <label>Categories</label>
+                    @for (int i = 0; i < Model.Categories.Count; i++)
+                    {
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="Category_@i" name="SelectedCategories" value="@Model.Categories[i].ID" @(Model.SelectedCategories != null ? (Model.SelectedCategories.Contains(Model.Categories[i].ID) ? "checked" : "") : "")>
+                            <label class="form-check-label" for="Category_@i">@Model.Categories[i].Name</label>
+                        </div>
+                    }
+                </div>
+                <div class="row mb-3">
+                    <label asp-for="Book.Price"></label>
+                    <input asp-for="Book.Price">
+                    <span asp-validation-for="Book.Price" class="text-danger"></span>
+                </div>
+                <div class="row mb-3">
+                    <label asp-for="Book.Quantity"></label>
+                    <input asp-for="Book.Quantity">
+                    <span asp-validation-for="Book.Quantity" class="text-danger"></span>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+
+@section Scripts {
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+} *@
