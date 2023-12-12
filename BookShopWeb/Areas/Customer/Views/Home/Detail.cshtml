@@ -1,6 +1,6 @@
 ﻿@model Book
 <h1>Book Detail</h1>
-    <div class="border p-3 mt-4">
+<div class="border p-3 mt-4">
     <img src="@Model.Book_Image" width="100%" alt="Book image" />
         <div class="row">
             <div class="col-10">
@@ -26,12 +26,5 @@
                     <h4>@Model.Quantity</h4>
                 </div>
             </div>
-            </div>
         </div>
-    </div>
-
-@section Scripts {
-    @{
-        <partial name="_ValidationScriptsPartial" />
-    }
-}
+</div>

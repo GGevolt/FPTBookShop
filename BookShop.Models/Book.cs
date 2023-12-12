@@ -15,8 +15,11 @@ namespace FPTBookShop.Models
 		[ValidateNever]
 		public string? Book_Image { get; set; }
         public int Quantity { get; set; }
-        public virtual ICollection<BookCategory>? BookCategories { get; set; }
-        public virtual List<CartDetail> CartDetails { get; set; }
-        public virtual ICollection<OrderDetail> OrderDetails { get; set; }
+		[ValidateNever]
+		public virtual ICollection<BookCategory>? BookCategories { get; set; }
+		[ValidateNever]
+		public virtual List<CartDetail>? CartDetails { get; set; }
+		[ValidateNever]
+		public virtual ICollection<OrderDetail>? OrderDetails { get; set; }
     }
 }
