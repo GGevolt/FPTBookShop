@@ -1,7 +1,9 @@
 ﻿using FPTBookShop.DataAccess.Repository.IRepository;
 using FPTBookShop.Models;
+using FPTBookShop.Models.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using static System.Reflection.Metadata.BlobBuilder;
 
 namespace FPTBookShopWeb.Areas.Customer.Controllers
 {
@@ -18,15 +20,26 @@ namespace FPTBookShopWeb.Areas.Customer.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index(string? search)
+        public IActionResult Index(string? search, int? cateID)
         {
+            HomeVM homeVM = new HomeVM() {
+                Categories = _unitOfWork.CategoryRepository.GetAll().ToList()
+            };
             if (!string.IsNullOrEmpty(search))
             {
                 search = search.ToLower();
-                return View(_unitOfWork.BookRepository.GetAll("BookCategories.Category").Where(b => b.Title.ToLower().Contains(search) || b.Author.ToLower().Contains(search)).ToList());
+                homeVM.Books = _unitOfWork.BookRepository.GetAll("BookCategories.Category").Where(b => b.Title.ToLower().Contains(search) || b.Author.ToLower().Contains(search)).ToList();
+                return View(homeVM);
             }
-            List<Book> books = _unitOfWork.BookRepository.GetAll("BookCategories.Category").ToList();
-            return View(books);
+            if (cateID != 0 && cateID != null)
+            {
+                List<Book> books = _unitOfWork.BookRepository.GetAll("BookCategories.Category").ToList();
+                List<int> bookIDs = _unitOfWork.BookCategoryRepository.GetAll().Where(bc => bc.CategoryId == cateID).Select(bc => bc.BookId).ToList();
+                homeVM.Books = books.Where(b => bookIDs.Contains(b.ID)).ToList();
+                return View(homeVM);
+            }
+            homeVM.Books = _unitOfWork.BookRepository.GetAll("BookCategories.Category").ToList();
+            return View(homeVM);
         }
 
         public IActionResult Privacy()

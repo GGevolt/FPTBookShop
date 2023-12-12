@@ -1,4 +1,4 @@
-﻿@model List<Book>
+﻿@model HomeVM
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -13,10 +13,29 @@
         </div>
     </div>
 </form>
+<div class="btn-group">
+    <button type="button" class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+        Category
+    </button>
+    <ul class="dropdown-menu">
+        @if (Model.Categories != null)
+        {
+            @foreach (var cate in Model.Categories)
+            {
+                <form method="get">
+                <li>
+                    <input type="hidden" name="cateID" value="@cate.ID" />
+                    <button type="submit" class="dropdown-item">@cate.Name</button>
+                </li>
+                </form>
+            }
+        }
+    </ul>
+</div>
 <section class="section">
     <div class="container">
         <div class="row g-3 g-lg-4">
-            @foreach (var Book in Model){
+            @foreach (var Book in Model.Books){
                 <div class="card" style="width: 18rem;">
                     <img src="@Book.Book_Image" class="card-img-top" alt="Book image">
                   <div class="card-body">
