@@ -10,6 +10,11 @@ namespace FPTBookShop.DataAccess
 		public DbSet<Book> Books { get; set; }
 		public DbSet<BookCategory> BookCategories { get; set; }
 		public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+        public DbSet<CartDetail> CartDetails { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderDetail> OrderDetails { get; set; }
+        public DbSet<OrderStatus> OrderStatuses { get; set; }
+		public DbSet<ShoppingCart> ShoppingCarts { get; set; }
 
 		public DbSet<Request> Requests { get; set; }
 
@@ -41,6 +46,12 @@ namespace FPTBookShop.DataAccess
 				new Category { ID = 4, Name = "Science", Description = "For anyone who loves science" },
 				new Category { ID = 5, Name = "History", Description = "You can know alot about the world" }
 				);
-		}
-	}
+            modelBuilder.Entity<OrderDetail>()
+			.HasOne(od => od.Order)
+			.WithMany(o => o.OrderDetails)
+			.HasForeignKey(od => od.OrderID)
+			.OnDelete(DeleteBehavior.Restrict);
+
+        }
+    }
 }

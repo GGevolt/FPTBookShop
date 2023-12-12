@@ -8,12 +8,11 @@ using System.Threading.Tasks;
 
 namespace FPTBookShop.Models
 {
-    [Table("ShoppingCart")]
-    public class ShoppingCart
+    [Table("OrderStatus")]
+    public class OrderStatus
     {
         public int Id { get; set; }
-        [Required]
-        public int AccountID { get; set; }
-        public bool IsDel { get; set; } = false;
+        [Required, MaxLength(20)]
+        public string ?StatusName { get; set; }
     }
 }
