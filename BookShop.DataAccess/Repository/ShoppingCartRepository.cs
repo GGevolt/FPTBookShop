@@ -11,25 +11,25 @@ using System.Threading.Tasks;
 
 namespace FPTBookShop.DataAccess.Repository
 {
-    public class ShoppingCartRepository: IShoppingCartRepository
+    public class ShoppingCartRepository: Repository<ShoppingCart>, IShoppingCartRepository
     {
         private readonly ApplicationDBContext _dbContext;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly IHttpContextAccessor _httpcontextAccessor;
-        public ShoppingCartRepository(ApplicationDBContext dBContext, UserManager<IdentityUser> userManager, IHttpContextAccessor httpcontextAccessor)
+        public ShoppingCartRepository(ApplicationDBContext dBContext, UserManager<IdentityUser> userManager, IHttpContextAccessor httpcontextAccessor) : base(dBContext)
         {
             _dbContext = dBContext;
             _userManager = userManager;
             _httpcontextAccessor = httpcontextAccessor;
         }
-        public async Task<bool> AddItem(int bookID, int Qty)
+        public async Task<int> AddItem(int bookID, int Qty)
         {
+            string UserID = GetUserId();
             using var transaction = _dbContext.Database.BeginTransaction();
             try
             {
-                string UserID = GetUserId();
                 if (string.IsNullOrEmpty(UserID))
-                    return false;
+                    throw new Exception("User is not loggin");
                 var cart = await GetCart(UserID);
                 if (cart is null)
                 {
@@ -57,49 +57,43 @@ namespace FPTBookShop.DataAccess.Repository
                 }
                 _dbContext.SaveChanges();
                 transaction.Commit();
-                return true;
             }
             catch (Exception ex)
-            {
-                return false;
+            { 
             }
+            var cartItemCount = await GetCartItemCount(UserID);
+            return cartItemCount;
         }
-        public async Task<bool> RemoveItem(int bookID)
+        public async Task<int> RemoveItem(int bookID)
         {
+            string UserID = GetUserId();
             //using var transaction = _dbContext.Database.BeginTransaction();
             try
             {
-                string UserID = GetUserId();
                 if (string.IsNullOrEmpty(UserID))
-                    return false;
+                    throw new Exception("User is not loggin");
                 var cart = await GetCart(UserID);
-                if (cart is null)
-                {
-                    return false;
-                }
-                var cartItem = _dbContext.CartDetails.FirstOrDefault(a => a.ShoppingCart_ID == cart.Id && a.BookID == bookID);
-                if (cartItem is null)
-                {
-                    return false;
-                }
-                else if (cartItem.Quantity == 1)
-                {
-                    _dbContext.CartDetails.Remove(cartItem);
-                }
-                else
-                {
-                    cartItem.Quantity = cartItem.Quantity - 1;
-                }
+                if (cart is null)               
+                    throw new Exception("Invalid Cart");
+               var cartItem = _dbContext.CartDetails.FirstOrDefault(a => a.ShoppingCart_ID == cart.Id && a.BookID == bookID);
+                if (cartItem is null)              
+                    throw new Exception("There is no Item in cart");
+                else if (cartItem.Quantity == 1)                
+                    _dbContext.CartDetails.Remove(cartItem);               
+                else               
+                    cartItem.Quantity = cartItem.Quantity - 1;               
                 _dbContext.SaveChanges();
                 //transaction.Commit();
-                return true;
+   
             }
             catch (Exception ex)
             {
-                return false;
+   
             }
+            var cartItemCount = await GetCartItemCount(UserID);
+            return cartItemCount;
         }
-        public async Task<IEnumerable<ShoppingCart>> GetUserCart()
+        public async Task<ShoppingCart> GetUserCart()
         {
             var UserID = GetUserId();
             if(UserID == null)
@@ -110,15 +104,26 @@ namespace FPTBookShop.DataAccess.Repository
                 .ThenInclude(a=>a.Book)
                 .ThenInclude(a => a.BookCategories)
                 .Where(a => a.AccountID == UserID )
-                .ToListAsync();
+                .FirstOrDefaultAsync();
             return shoppingCart;
         }
- 
-
-        private async Task<ShoppingCart> GetCart(string UserID)
+        public async Task<ShoppingCart> GetCart(string UserID)
         {
             var cart = await _dbContext.ShoppingCarts.FirstOrDefaultAsync(x => x.AccountID == UserID);
             return cart;
+        }
+        public async Task<int> GetCartItemCount(string UserID = "")
+        {
+            if(!string.IsNullOrEmpty(UserID))
+            {
+                UserID = GetUserId();
+            }
+            var data = await (from cart in _dbContext.ShoppingCarts
+                              join CartDetail in _dbContext.CartDetails
+                              on cart.Id equals CartDetail.ShoppingCart_ID
+                              select new { CartDetail.Id }
+                              ).ToListAsync();
+            return data.Count;
         }
         private string GetUserId()
         {
