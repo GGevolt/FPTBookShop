@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System.ComponentModel.DataAnnotations;
 
 namespace FPTBookShop.Models
 {
@@ -11,10 +12,14 @@ namespace FPTBookShop.Models
         public string Author { get; set; }
         [Range(1, 1000)]
         public double Price { get; set; }
-        public string? Book_Image { get; set; }
+		[ValidateNever]
+		public string? Book_Image { get; set; }
         public int Quantity { get; set; }
-        public virtual ICollection<BookCategory>? BookCategories { get; set; }
-        public virtual List<CartDetail> CartDetails { get; set; }
-        public virtual ICollection<OrderDetail> OrderDetails { get; set; }
+		[ValidateNever]
+		public virtual ICollection<BookCategory>? BookCategories { get; set; }
+		[ValidateNever]
+		public virtual List<CartDetail>? CartDetails { get; set; }
+		[ValidateNever]
+		public virtual ICollection<OrderDetail>? OrderDetails { get; set; }
     }
 }

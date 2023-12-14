@@ -42,10 +42,11 @@ namespace FPTBookShopWeb.Areas.Customer.Controllers
             return View(homeVM);
         }
 
+
         public IActionResult Detail(int? id)
         {
             Book book = _unitOfWork.BookRepository.Get(b => b.ID == id, "BookCategories.Category");
-            return View();
+            return View(book);
         }
 
         public IActionResult Privacy()

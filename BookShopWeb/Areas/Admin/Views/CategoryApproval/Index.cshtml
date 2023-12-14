@@ -26,19 +26,22 @@
 					<td>@request.Status</td>
 					<td>
 						<div class="btn group" role="group">
-							@using (Html.BeginForm("ApproveRequest", "CategoryApproval"))
+							@if (request.Status.Equals("Pending"))
 							{
-								@Html.Hidden("id", @request.ID)
-								<button type="submit" class="btn btn-primary">
-									<i class="bi bi-pencil"></i> Approve
-								</button>
-							}
-							@using (Html.BeginForm("RejectRequest", "CategoryApproval"))
-							{
-								@Html.Hidden("id", @request.ID)
-								<button type="submit" class="btn btn-danger">
-									<i class="bi bi-pencil"></i> Reject
-								</button>
+								@using (Html.BeginForm("ApproveRequest", "CategoryApproval"))
+								{
+									@Html.Hidden("id", @request.ID)
+									<button type="submit" class="btn btn-primary">
+										<i class="bi bi-pencil"></i> Approve
+									</button>
+								}
+								@using (Html.BeginForm("RejectRequest", "CategoryApproval"))
+								{
+									@Html.Hidden("id", @request.ID)
+									<button type="submit" class="btn btn-danger">
+										<i class="bi bi-pencil"></i> Reject
+									</button>
+								}
 							}
 						</div>
 					</td>
