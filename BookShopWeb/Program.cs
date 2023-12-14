@@ -54,4 +54,43 @@ app.MapControllerRoute(
 	name: "default",
 	pattern: "{area=Customer}/{controller=Home}/{action=Index}/{id?}");
 
+using(var scope = app.Services.CreateScope())
+{
+	var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+	var roles = new[] { "Admin", "StoreOwner", "Customer" };
+	foreach(var role in roles)
+	{
+		if(! roleManager.RoleExistsAsync(role).GetAwaiter().GetResult())
+		{
+			roleManager.CreateAsync(new IdentityRole(role)).GetAwaiter().GetResult();
+		}
+	}
+}
+using (var scope = app.Services.CreateScope())
+{
+	var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
+	string AD_email = "admin@email.com";
+	string SO_email = "storeowner@email.com";
+	string AD_pass = "!Admin123";
+	string SO_pass = "!StoreOwner123";
+	if(userManager.FindByEmailAsync(AD_email).GetAwaiter().GetResult() == null)
+	{
+		var user = new IdentityUser();
+		user.Email = AD_email;
+		user.UserName = AD_email;
+		user.EmailConfirmed = true;
+		userManager.CreateAsync(user, AD_pass).GetAwaiter().GetResult();
+		userManager.AddToRoleAsync(user, "Admin").GetAwaiter().GetResult();
+	}
+	if (userManager.FindByEmailAsync(SO_email).GetAwaiter().GetResult() == null)
+	{
+		var user = new IdentityUser();
+		user.Email = SO_email;
+		user.UserName = SO_email;
+		user.EmailConfirmed = true;
+		userManager.CreateAsync(user, SO_pass).GetAwaiter().GetResult();
+		userManager.AddToRoleAsync(user, "StoreOwner").GetAwaiter().GetResult();
+	}
+}
+
 app.Run();
