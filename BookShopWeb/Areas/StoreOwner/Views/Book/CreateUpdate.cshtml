@@ -23,13 +23,15 @@
                 </div>
                 <div class="row mb-3">
                     <label>Categories</label>
-                    @for (int i = 0; i < Model.Categories.Count; i++)
-                    {
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="Category_@i" name="SelectedCategories" value="@Model.Categories[i].ID" @(Model.SelectedCategories != null ? (Model.SelectedCategories.Contains(Model.Categories[i].ID) ? "checked" : "") : "")>
-                            <label class="form-check-label" for="Category_@i">@Model.Categories[i].Name</label>
-                        </div>
-                    }
+                    <ul class="category-list">
+                        @foreach (var category in Model.Categories.OrderBy(c => c.Name))
+                        {
+                            <li class="form-check li-form">
+                                <input class="form-check-input" type="checkbox" id="Category_@category.ID" name="SelectedCategories" value="@category.ID" @(Model.SelectedCategories != null ? (Model.SelectedCategories.Contains(category.ID) ? "checked" : "") : "")>
+                                <label class="form-check-label" for="Category_@category.ID">@category.Name</label>
+                            </li>
+                        }
+                    </ul>
                 </div>
                 <div class="row mb-3">
                     <label asp-for="Book.Price"></label>
