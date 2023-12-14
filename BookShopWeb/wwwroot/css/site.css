@@ -20,3 +20,13 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.category-list {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.li-form {
+    margin-right: 20px;
+    flex: 0 0 calc(100% / 6 - 20px);
+}
