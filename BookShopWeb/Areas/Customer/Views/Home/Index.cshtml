@@ -2,17 +2,18 @@
 @{
     ViewData["Title"] = "Home Page";
 }
-<h2>Search</h2>
-<form method="get">
-    <div class="row"> 
-        <div class="col-md-8">
-            <input name="search" class="form-control" placeholder="Search by Title, Author"/>
+<div class="banner">
+    <form method="get" style="align-items: center; justify-content: center; display: flex">
+        <div class="row">
+            <div class="col-md-8">
+                <input name="search" class="form-control" placeholder="Search by Title, Author" />
+            </div>
+            <div class="col-md-4">
+                <button type="submit" class="btn-info">Search</button>
+            </div>
         </div>
-        <div class="col-md-4">
-            <button type="submit" class="btn-info">Search</button>
-        </div>
-    </div>
-</form>
+    </form>
+</div>
 <div class="btn-group">
     <button type="button" class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
         Category
