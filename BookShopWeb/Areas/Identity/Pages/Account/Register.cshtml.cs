@@ -103,27 +103,11 @@ namespace FPTBookShopWeb.Areas.Identity.Pages.Account
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
             public string? Role { get;set; }
-            public IEnumerable<SelectListItem> RoleList { get; set; }
         }
 
 
         public async Task OnGetAsync(string returnUrl = null)
         {
-            if (!_roleManager.RoleExistsAsync("Customer").GetAwaiter().GetResult())
-            {
-                _roleManager.CreateAsync(new IdentityRole("Customer")).GetAwaiter().GetResult();
-                _roleManager.CreateAsync(new IdentityRole("Admin")).GetAwaiter().GetResult();
-                _roleManager.CreateAsync(new IdentityRole("StoreOwner")).GetAwaiter().GetResult();
-            }
-            
-            Input = new()
-            {
-                RoleList = _roleManager.Roles.Select(x => x.Name).Select(i => new SelectListItem
-                {
-                    Text = i,
-                    Value = i
-                })
-            };
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
@@ -142,16 +126,7 @@ namespace FPTBookShopWeb.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
-
-                    if (String.IsNullOrEmpty(Input.Role))
-                    {
-                        await _userManager.AddToRoleAsync(user, "Customer");
-                    }
-                    else
-                    {
-                        await _userManager.AddToRoleAsync(user, Input.Role);
-                    }
-
+                    await _userManager.AddToRoleAsync(user, "Customer");
                     var userId = await _userManager.GetUserIdAsync(user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
