@@ -14,9 +14,9 @@ namespace FPTBookShop.DataAccess.Repository
     public class ShoppingCartRepository: Repository<ShoppingCart>, IShoppingCartRepository
     {
         private readonly ApplicationDBContext _dbContext;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly IHttpContextAccessor _httpcontextAccessor;
-        public ShoppingCartRepository(ApplicationDBContext dBContext, UserManager<IdentityUser> userManager, IHttpContextAccessor httpcontextAccessor) : base(dBContext)
+        public ShoppingCartRepository(ApplicationDBContext dBContext, UserManager<ApplicationUser> userManager, IHttpContextAccessor httpcontextAccessor) : base(dBContext)
         {
             _dbContext = dBContext;
             _userManager = userManager;

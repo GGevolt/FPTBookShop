@@ -4,7 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FPTBookShopWeb.Areas.Customer.Controllers
 {
-    [Authorize]
+    [Area("Customer")]
+    [Authorize(Roles = "Customer")]
     public class CartController : Controller
     {
         private readonly IShoppingCartRepository _cartRepo;
@@ -13,13 +14,12 @@ namespace FPTBookShopWeb.Areas.Customer.Controllers
             _cartRepo = cartRepo;
         }
         [HttpGet]
-        public async Task<IActionResult> AddItem(int bookID, int Qty = 1, int redirect = 0)
+        public async Task<IActionResult> AddItem(int bookID)
         {
 
-            var cartCount = await _cartRepo.AddItem(bookID, Qty);
-            if (redirect == 0)
+            var cartCount = await _cartRepo.AddItem(bookID,  1);
                 return Ok(cartCount);
-            return RedirectToAction("GetUserCart");
+            //return RedirectToAction("GetUserCart");
         }
         public async Task<IActionResult> RemoveItem(int bookID)
         {
