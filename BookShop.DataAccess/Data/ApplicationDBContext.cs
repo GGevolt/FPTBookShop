@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FPTBookShop.DataAccess
 {
-	public class ApplicationDBContext : IdentityDbContext
+	public class ApplicationDBContext : IdentityDbContext<ApplicationUser>
 	{
 		public DbSet<Category> Categories { get; set; }
 		public DbSet<Book> Books { get; set; }
