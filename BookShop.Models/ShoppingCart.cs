@@ -13,7 +13,8 @@ namespace FPTBookShop.Models
     {
         public int Id { get; set; }
         [Required]
-        public int AccountID { get; set; }
+        public String AccountID { get; set; }
         public bool IsDel { get; set; } = false;
+        public ICollection<CartDetail> CartsDetails { get; set; }
     }
 }

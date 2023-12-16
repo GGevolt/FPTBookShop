@@ -44,9 +44,30 @@
                     <p class="card-text">@Book.Description</p>
                     <h6 class="card-title">Price: @Book.Price $</h6>
                         <a asp-area="Customer" asp-controller="Home" asp-action="Detail" asp-route-id="@Book.ID" class="btn btn-primary">Detail</a>
+                        <button type="button" onclick="add(@Book.ID)" class="btn btn-primary">Add to cart</button>
                   </div>
                 </div>
              }
         </div>
     </div>
  </section>
+@section Scripts {
+    <script>
+        async function add(bookID) {
+            try {
+                var response = await fetch(`/Cart/AddItem?bookID=${bookID}`);
+                if (response.status == 200) {
+                    var result = await response.json();
+                    console.log(result);
+                    var cartCountEl = document.getElementById("cartCount");
+                    cartCountEl.innerHTML = result;
+                }
+            }
+            catch (err) {
+                console.log(err)
+            }
+        }
+    </script>
+}
+}
+ }

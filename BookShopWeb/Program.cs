@@ -24,6 +24,7 @@ builder.Services.AddIdentity<IdentityUser,IdentityRole>(options => options.SignI
 builder.Services.AddScoped<IUnitOfWork,UnitOfWorks>();
 builder.Services.AddScoped<IEmailSender, EmailSender>();
 builder.Services.AddRazorPages();
+builder.Services.AddTransient<IShoppingCartRepository, ShoppingCartRepository>();
 
 
 builder.Services.ConfigureApplicationCookie(option =>
