@@ -58,16 +58,16 @@
     <script>
         async function add(bookID) {
             try {
-                var response = await fetch(`/Cart/AddItem?bookID=${bookID}`);
+                var response = await fetch(`/Cart/AddItem ? bookID = ${ bookID }`);
                 if (response.status == 200) {
                     var result = await response.json();
-                    console.log(result);
                     var cartCountEl = document.getElementById("cartCount");
                     cartCountEl.innerHTML = result;
+                    window.location.href = "#cartCount";
                 }
             }
             catch (err) {
-                console.log(err)
+                console.log(err);
             }
         }
     </script>
