@@ -10,11 +10,12 @@ namespace FPTBookShop.Models
         public string Title { get; set; }
         public string Description { get; set; }
         public string Author { get; set; }
-        [Range(1, 6900)]
+        [Range(1, 10000)]
         public double Price { get; set; }
 		[ValidateNever]
 		public string? Book_Image { get; set; }
-        public int Quantity { get; set; }
+		[Range(1,10000)]
+		public int Quantity { get; set; }
 		[ValidateNever]
 		public virtual ICollection<BookCategory>? BookCategories { get; set; }
     }
