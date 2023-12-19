@@ -126,7 +126,7 @@ namespace FPTBookShop.DataAccess.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Books");
+                    b.ToTable("Books", (string)null);
                 });
 
             modelBuilder.Entity("FPTBookShop.Models.BookCategory", b =>
@@ -141,7 +141,7 @@ namespace FPTBookShop.DataAccess.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("BookCategories");
+                    b.ToTable("BookCategories", (string)null);
                 });
 
             modelBuilder.Entity("FPTBookShop.Models.CartDetail", b =>
@@ -170,7 +170,7 @@ namespace FPTBookShop.DataAccess.Migrations
 
                     b.HasIndex("ShoppingCartId");
 
-                    b.ToTable("CartDetail");
+                    b.ToTable("CartDetail", (string)null);
                 });
 
             modelBuilder.Entity("FPTBookShop.Models.Category", b =>
@@ -191,7 +191,7 @@ namespace FPTBookShop.DataAccess.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
 
                     b.HasData(
                         new
@@ -249,7 +249,9 @@ namespace FPTBookShop.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Order");
+                    b.HasIndex("OrderStatusID");
+
+                    b.ToTable("Order", (string)null);
                 });
 
             modelBuilder.Entity("FPTBookShop.Models.OrderDetail", b =>
@@ -278,7 +280,37 @@ namespace FPTBookShop.DataAccess.Migrations
 
                     b.HasIndex("OrderID");
 
-                    b.ToTable("OrderDetail");
+                    b.ToTable("OrderDetail", (string)null);
+                });
+
+            modelBuilder.Entity("FPTBookShop.Models.OrderStatus", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("StatusID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("StatusName")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("OrderStatus");
+                });
+
+                    b.ToTable("OrderStatus");
+                });
+
+                    b.ToTable("OrderStatus");
+                });
+
+                    b.ToTable("OrderStatus");
                 });
 
             modelBuilder.Entity("FPTBookShop.Models.Request", b =>
@@ -310,7 +342,7 @@ namespace FPTBookShop.DataAccess.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Requests");
+                    b.ToTable("Requests", (string)null);
                 });
 
             modelBuilder.Entity("FPTBookShop.Models.ShoppingCart", b =>
@@ -330,7 +362,7 @@ namespace FPTBookShop.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ShoppingCart");
+                    b.ToTable("ShoppingCart", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
