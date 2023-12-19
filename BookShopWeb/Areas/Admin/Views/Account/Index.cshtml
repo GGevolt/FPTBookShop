@@ -1,0 +1,56 @@
+﻿@model IEnumerable<ApplicationUser>
+<partial name="_Notification" />
+<div class="row pt-4 pb-4">
+	<div class="col-9">
+		<h2>List of Customer account</h2>
+	</div>
+	<div class="btn-group">
+		<button type="button" class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+			Role
+		</button>
+		<ul class="dropdown-menu">
+			<form method="get">
+				<li>
+					<input type="hidden" name="sort" value="Customer" />
+					<button type="submit" class="dropdown-item">Customer</button>
+				</li>
+			</form>
+			<form method="get">
+				<li>
+					<input type="hidden" name="sort" value="StoreOwner" />
+					<button type="submit" class="dropdown-item">Store Owner</button>
+				</li>
+			</form>
+			<form method="get">
+				<li>
+					<input type="hidden" name="sort" value="Admin" />
+					<button type="submit" class="dropdown-item">Admin</button>
+				</li>
+			</form>
+		</ul>
+	</div>
+</div>
+<div>
+	<table class="table table-bordered">
+		<thead>
+			<tr>
+				<th>Email</th>
+				<th>Full Name</th>
+				<th>Home Address</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var user in Model)
+			{
+				<tr>
+					<td>@user.Email</td>
+					<td>@user.Full_Name</td>
+					<td>@user.Address</td>
+					<td>
+						<a asp-controller="Account" asp-action="ChangePassword" asp-route-id="@user.Id" class="btn btn-primary"><i class="bi bi-pencil"></i> Reset Password</a>
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+</div>

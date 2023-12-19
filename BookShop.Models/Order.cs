@@ -17,7 +17,6 @@ namespace FPTBookShop.Models
         public string UserID { get; set; }
         [Required]
         public int OrderStatusID { get; set; }
-        public OrderStatus OrderStatus { get; set; }
         public bool IsDelete { get; set; } = false;
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
     }
