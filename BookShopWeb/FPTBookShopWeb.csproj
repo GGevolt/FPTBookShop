@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Areas\Cart\**" />
+    <Content Remove="Areas\Cart\**" />
+    <EmbeddedResource Remove="Areas\Cart\**" />
+    <None Remove="Areas\Cart\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Remove="wwwroot\img\1987d6be-1cf2-4417-90a8-4ac454dcdfa5.PNG" />
     <Content Remove="wwwroot\img\53b51c59-2e01-4ca9-9da2-9e69268f54be.png" />
     <Content Remove="wwwroot\img\53d9d6de-f54b-4c15-9cb2-90be9f092920.PNG" />

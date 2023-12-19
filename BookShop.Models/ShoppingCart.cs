@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -8,12 +9,18 @@ using System.Threading.Tasks;
 
 namespace FPTBookShop.Models
 {
-    [Table("ShoppingCart")]
     public class ShoppingCart
     {
         public int Id { get; set; }
-        [Required]
-        public int AccountID { get; set; }
-        public bool IsDel { get; set; } = false;
+        public int BookID { get; set; }
+        [ForeignKey("BookID")]
+        [ValidateNever]
+        public Book book { get; set; }
+        [Range(1, 188, ErrorMessage = "188bet friend of people")]
+        public int Count { get; set; }
+        public string UserID { get; set; }
+        [ForeignKey("UserID")]
+        [ValidateNever]
+        public ApplicationUser ApplicationUser { get; set; }
     }
 }

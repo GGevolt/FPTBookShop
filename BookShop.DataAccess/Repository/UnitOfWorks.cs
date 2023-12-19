@@ -1,5 +1,8 @@
 ﻿using FPTBookShop.DataAccess;
 using FPTBookShop.DataAccess.Repository.IRepository;
+using FPTBookShop.Models;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 
 namespace FPTBookShop.DataAccess.Repository
 {
@@ -11,8 +14,8 @@ namespace FPTBookShop.DataAccess.Repository
         public IBookRepository BookRepository { get; private set; }
         public IBookCategoryRepository BookCategoryRepository { get; private set; }
         public IRequestRepository RequestRepository { get; private set; }
-
-        public UnitOfWorks(ApplicationDBContext dBContext)
+       
+        public UnitOfWorks(ApplicationDBContext dBContext, UserManager<ApplicationUser> userManager, IHttpContextAccessor httpcontextAccessor)
         {
             _dbContext = dBContext;
             CategoryRepository = new CategoryRepository(dBContext);

@@ -4,6 +4,7 @@ using FPTBookShop.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FPTBookShop.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    partial class ApplicationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20231216013255_seed6")]
+    partial class seed6
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -126,7 +129,7 @@ namespace FPTBookShop.DataAccess.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Books", (string)null);
+                    b.ToTable("Books");
                 });
 
             modelBuilder.Entity("FPTBookShop.Models.BookCategory", b =>
@@ -141,7 +144,7 @@ namespace FPTBookShop.DataAccess.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("BookCategories", (string)null);
+                    b.ToTable("BookCategories");
                 });
 
             modelBuilder.Entity("FPTBookShop.Models.CartDetail", b =>
@@ -170,7 +173,7 @@ namespace FPTBookShop.DataAccess.Migrations
 
                     b.HasIndex("ShoppingCartId");
 
-                    b.ToTable("CartDetail", (string)null);
+                    b.ToTable("CartDetail");
                 });
 
             modelBuilder.Entity("FPTBookShop.Models.Category", b =>
@@ -191,7 +194,7 @@ namespace FPTBookShop.DataAccess.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Categories", (string)null);
+                    b.ToTable("Categories");
 
                     b.HasData(
                         new
@@ -251,7 +254,7 @@ namespace FPTBookShop.DataAccess.Migrations
 
                     b.HasIndex("OrderStatusID");
 
-                    b.ToTable("Order", (string)null);
+                    b.ToTable("Order");
                 });
 
             modelBuilder.Entity("FPTBookShop.Models.OrderDetail", b =>
@@ -280,7 +283,7 @@ namespace FPTBookShop.DataAccess.Migrations
 
                     b.HasIndex("OrderID");
 
-                    b.ToTable("OrderDetail", (string)null);
+                    b.ToTable("OrderDetail");
                 });
 
             modelBuilder.Entity("FPTBookShop.Models.OrderStatus", b =>
@@ -298,7 +301,7 @@ namespace FPTBookShop.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("OrderStatus", (string)null);
+                    b.ToTable("OrderStatus");
                 });
 
             modelBuilder.Entity("FPTBookShop.Models.Request", b =>
@@ -330,7 +333,7 @@ namespace FPTBookShop.DataAccess.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Requests", (string)null);
+                    b.ToTable("Requests");
                 });
 
             modelBuilder.Entity("FPTBookShop.Models.ShoppingCart", b =>
@@ -349,7 +352,7 @@ namespace FPTBookShop.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ShoppingCart", (string)null);
+                    b.ToTable("ShoppingCart");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

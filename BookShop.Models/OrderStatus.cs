@@ -12,6 +12,8 @@ namespace FPTBookShop.Models
     public class OrderStatus
     {
         public int Id { get; set; }
+        [Required]
+        public int StatusID { get; set; }
         [Required, MaxLength(20)]
         public string ?StatusName { get; set; }
     }

@@ -7,6 +7,7 @@ using FPTBookShopWeb.Utility;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore;
+using FPTBookShop.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,10 +21,11 @@ builder.Services.AddDbContext<ApplicationDBContext>(options =>
 	options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
 );
 
-builder.Services.AddIdentity<IdentityUser,IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<ApplicationDBContext>().AddDefaultTokenProviders();
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<ApplicationDBContext>().AddDefaultTokenProviders();
 builder.Services.AddScoped<IUnitOfWork,UnitOfWorks>();
 builder.Services.AddScoped<IEmailSender, EmailSender>();
 builder.Services.AddRazorPages();
+builder.Services.AddTransient<IShoppingCartRepository, ShoppingCartRepository>();
 
 
 builder.Services.ConfigureApplicationCookie(option =>
@@ -68,26 +70,32 @@ using(var scope = app.Services.CreateScope())
 }
 using (var scope = app.Services.CreateScope())
 {
-	var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
+	var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
 	string AD_email = "admin@email.com";
 	string SO_email = "storeowner@email.com";
 	string AD_pass = "!Admin123";
 	string SO_pass = "!StoreOwner123";
-	if(userManager.FindByEmailAsync(AD_email).GetAwaiter().GetResult() == null)
+    string FullName = "Sherlock Holmes";
+    string Address = "221B Baker Street";
+    if (userManager.FindByEmailAsync(AD_email).GetAwaiter().GetResult() == null)
 	{
-		var user = new IdentityUser();
+		var user = new ApplicationUser();
 		user.Email = AD_email;
 		user.UserName = AD_email;
-		user.EmailConfirmed = true;
+        user.Full_Name = FullName;
+        user.Address = Address;
+        user.EmailConfirmed = true;
 		userManager.CreateAsync(user, AD_pass).GetAwaiter().GetResult();
 		userManager.AddToRoleAsync(user, "Admin").GetAwaiter().GetResult();
 	}
 	if (userManager.FindByEmailAsync(SO_email).GetAwaiter().GetResult() == null)
 	{
-		var user = new IdentityUser();
+		var user = new ApplicationUser();
 		user.Email = SO_email;
 		user.UserName = SO_email;
-		user.EmailConfirmed = true;
+		user.Full_Name = FullName;
+		user.Address = Address;
+        user.EmailConfirmed = true;
 		userManager.CreateAsync(user, SO_pass).GetAwaiter().GetResult();
 		userManager.AddToRoleAsync(user, "StoreOwner").GetAwaiter().GetResult();
 	}
