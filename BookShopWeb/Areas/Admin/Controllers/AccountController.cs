@@ -13,20 +13,34 @@ namespace FPTBookShopWeb.Areas.Admin.Controllers
     public class AccountController : Controller
 	{
         private readonly UserManager<ApplicationUser> _userManager;
+		private readonly RoleManager<IdentityRole> _roleManager;
 
-        public AccountController(UserManager<ApplicationUser> userManager)
+		public AccountController(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
 		{
 			_userManager = userManager;
+			_roleManager = roleManager;
 		}
         [HttpGet]
         public IActionResult Index(string? sort)
 		{
+			var userRoles = new List<AccountVM>();
 			if (!string.IsNullOrEmpty(sort))
 			{
-                return View(_userManager.GetUsersInRoleAsync(sort).GetAwaiter().GetResult());
-            }
-            var users = _userManager.Users;
-            return View(users);
+				foreach (var user in _userManager.GetUsersInRoleAsync(sort).GetAwaiter().GetResult())
+				{
+					List<string> roles = (List<string>)_userManager.GetRolesAsync(user).GetAwaiter().GetResult();
+					userRoles.Add(new AccountVM { User = user, Roles = roles });
+				}
+				return View(userRoles);
+			}
+			var users = _userManager.Users.ToList();
+			foreach (var user in users)
+			{
+				List<string> roles = (List<string>)_userManager.GetRolesAsync(user).GetAwaiter().GetResult();
+				userRoles.Add(new AccountVM { User = user, Roles = roles });
+			}
+
+			return View(userRoles);
 		}
 
 		public async Task<IActionResult> ChangePasswordAsync(string? id)
@@ -77,5 +91,29 @@ namespace FPTBookShopWeb.Areas.Admin.Controllers
 			}
 			return View();
 		}
-    }
+		[HttpPost]
+		public async Task<IActionResult> AssignRole(string userId, string newrole)
+		{
+			var user = await _userManager.FindByIdAsync(userId);
+			if (user == null)
+			{
+				return NotFound("User not found");
+			}
+			var currentRoles = await _userManager.GetRolesAsync(user);
+			foreach (var role in currentRoles)
+			{
+				await _userManager.RemoveFromRoleAsync(user, role);
+			}
+			var result = await _userManager.AddToRoleAsync(user, newrole);
+			if (result.Succeeded)
+			{
+				TempData["success"] = "Role assigned successfully";
+			}
+			else
+			{
+				TempData["error"] = "Failed to assign role";
+			}
+			return RedirectToAction("Index");
+		}
+	}
 }
