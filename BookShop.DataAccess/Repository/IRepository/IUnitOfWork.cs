@@ -6,6 +6,8 @@
         IBookRepository BookRepository { get; }
         IBookCategoryRepository BookCategoryRepository { get; }
         IRequestRepository RequestRepository { get; }
+        IShoppingcartRepository ShoppingcartRepository { get; }
+        IApplicationUserRepository ApplicationUserRepository { get; }
         void Save();
     }
 }

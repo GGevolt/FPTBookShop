@@ -1,8 +1,10 @@
 ﻿using FPTBookShop.DataAccess.Repository.IRepository;
 using FPTBookShop.Models;
 using FPTBookShop.Models.ViewModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.Security.Claims;
 using static System.Reflection.Metadata.BlobBuilder;
 
 namespace FPTBookShopWeb.Areas.Customer.Controllers
@@ -43,10 +45,27 @@ namespace FPTBookShopWeb.Areas.Customer.Controllers
         }
 
 
-        public IActionResult Detail(int? id)
+        public IActionResult Detail(int id)
         {
-            Book book = _unitOfWork.BookRepository.Get(b => b.ID == id, "BookCategories.Category");
-            return View(book);
+            ShoppingCart cart = new()
+            {
+                book = _unitOfWork.BookRepository.Get(b => b.ID == id, "BookCategories.Category"),
+                Count = 1,
+                BookID=id,
+            };
+        
+            return View(cart);
+        }
+        [HttpPost]
+        [Authorize(Roles = "Customer")]
+        public IActionResult Detail(ShoppingCart shoppingCart)
+        {
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            shoppingCart.UserID = userId;
+            shoppingCart.Id = 0;
+            _unitOfWork.ShoppingcartRepository.Add(shoppingCart);
+            _unitOfWork.Save();
+            return RedirectToAction(nameof(Index));
         }
 
         public IActionResult Privacy()

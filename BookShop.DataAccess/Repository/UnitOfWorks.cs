@@ -14,14 +14,17 @@ namespace FPTBookShop.DataAccess.Repository
         public IBookRepository BookRepository { get; private set; }
         public IBookCategoryRepository BookCategoryRepository { get; private set; }
         public IRequestRepository RequestRepository { get; private set; }
-       
-        public UnitOfWorks(ApplicationDBContext dBContext, UserManager<ApplicationUser> userManager, IHttpContextAccessor httpcontextAccessor)
+        public IShoppingcartRepository ShoppingcartRepository { get; private set; }
+        public IApplicationUserRepository ApplicationUserRepository { get; private set; }
+        public UnitOfWorks(ApplicationDBContext dBContext)
         {
             _dbContext = dBContext;
             CategoryRepository = new CategoryRepository(dBContext);
             BookRepository = new BookRepository(dBContext);
             BookCategoryRepository = new BookCategoryRepository(dBContext);
             RequestRepository = new RequestRepository(dBContext);
+            ShoppingcartRepository = new ShoppingcartRepository(dBContext);
+            ApplicationUserRepository = new ApplicationUserRepository(dBContext);
         }
 
         public void Save()

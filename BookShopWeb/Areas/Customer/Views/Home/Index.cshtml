@@ -47,29 +47,11 @@
                         @if (User.IsInRole("Customer")){
                             <button type="button" onclick="add(@Book.ID)" class="btn btn-primary">add to cart</button>
                         }
-                        @* <a asp-area="Customer" asp-controller="Cart" asp-action="AddItem" asp-route-id="@Book.ID" class="btn btn-primary">Add To cart</a> *@
                   </div>
                 </div>
              }
         </div>
     </div>
  </section>
-@section Scripts {
-    <script>
-        async function add(bookID) {
-            try {
-                var response = await fetch(`/Cart/AddItem ? bookID = ${ bookID }`);
-                if (response.status == 200) {
-                    var result = await response.json();
-                    var cartCountEl = document.getElementById("cartCount");
-                    cartCountEl.innerHTML = result;
-                    window.location.href = "#cartCount";
-                }
-            }
-            catch (err) {
-                console.log(err);
-            }
-        }
-    </script>
 }
 

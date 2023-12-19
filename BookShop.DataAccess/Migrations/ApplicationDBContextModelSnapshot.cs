@@ -126,7 +126,7 @@ namespace FPTBookShop.DataAccess.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Books", (string)null);
+                    b.ToTable("Books");
                 });
 
             modelBuilder.Entity("FPTBookShop.Models.BookCategory", b =>
@@ -141,36 +141,7 @@ namespace FPTBookShop.DataAccess.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("BookCategories", (string)null);
-                });
-
-            modelBuilder.Entity("FPTBookShop.Models.CartDetail", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("BookID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ShoppingCartId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ShoppingCart_ID")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BookID");
-
-                    b.HasIndex("ShoppingCartId");
-
-                    b.ToTable("CartDetail", (string)null);
+                    b.ToTable("BookCategories");
                 });
 
             modelBuilder.Entity("FPTBookShop.Models.Category", b =>
@@ -191,7 +162,7 @@ namespace FPTBookShop.DataAccess.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Categories", (string)null);
+                    b.ToTable("Categories");
 
                     b.HasData(
                         new
@@ -226,81 +197,6 @@ namespace FPTBookShop.DataAccess.Migrations
                         });
                 });
 
-            modelBuilder.Entity("FPTBookShop.Models.Order", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreateDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDelete")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("OrderStatusID")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserID")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OrderStatusID");
-
-                    b.ToTable("Order", (string)null);
-                });
-
-            modelBuilder.Entity("FPTBookShop.Models.OrderDetail", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("BookID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("OrderID")
-                        .HasColumnType("int");
-
-                    b.Property<double>("Price")
-                        .HasColumnType("float");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BookID");
-
-                    b.HasIndex("OrderID");
-
-                    b.ToTable("OrderDetail", (string)null);
-                });
-
-            modelBuilder.Entity("FPTBookShop.Models.OrderStatus", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("StatusName")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("OrderStatus", (string)null);
-                });
-
             modelBuilder.Entity("FPTBookShop.Models.Request", b =>
                 {
                     b.Property<int>("ID")
@@ -330,7 +226,7 @@ namespace FPTBookShop.DataAccess.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Requests", (string)null);
+                    b.ToTable("Requests");
                 });
 
             modelBuilder.Entity("FPTBookShop.Models.ShoppingCart", b =>
@@ -344,12 +240,18 @@ namespace FPTBookShop.DataAccess.Migrations
                     b.Property<int>("AccountID")
                         .HasColumnType("int");
 
-                    b.Property<bool>("IsDel")
-                        .HasColumnType("bit");
+                    b.Property<int>("Count")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("ShoppingCart", (string)null);
+                    b.HasIndex("BookID");
+
+                    b.ToTable("ShoppingCarts");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -504,7 +406,7 @@ namespace FPTBookShop.DataAccess.Migrations
                     b.Navigation("Category");
                 });
 
-            modelBuilder.Entity("FPTBookShop.Models.CartDetail", b =>
+            modelBuilder.Entity("FPTBookShop.Models.ShoppingCart", b =>
                 {
                     b.HasOne("FPTBookShop.Models.Book", "Book")
                         .WithMany("CartDetails")
@@ -550,7 +452,7 @@ namespace FPTBookShop.DataAccess.Migrations
 
                     b.Navigation("Book");
 
-                    b.Navigation("Order");
+                    b.Navigation("book");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -607,10 +509,6 @@ namespace FPTBookShop.DataAccess.Migrations
             modelBuilder.Entity("FPTBookShop.Models.Book", b =>
                 {
                     b.Navigation("BookCategories");
-
-                    b.Navigation("CartDetails");
-
-                    b.Navigation("OrderDetails");
                 });
 
             modelBuilder.Entity("FPTBookShop.Models.Category", b =>
