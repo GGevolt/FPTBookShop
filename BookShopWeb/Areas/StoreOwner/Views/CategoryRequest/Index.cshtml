@@ -1,33 +1,43 @@
 ﻿@model List<Request>
-<partial name="_Notification" />
-<div class="row pt-4 pb-4">
-	<div class="col-9">
-		<h2>List of Your Request</h2>
-	</div>
-	<div class="col-3">
-		<a asp-controller="CategoryRequest" asp-action="MakeRequest" class="btn btn-primary">Create new request for ADMIN</a>
-	</div>
-</div>
-<div>
-	<table class="table table-bordered">
-		<thead>
-			<tr>
-				<th>Request Name</th>
-				<th>Request Description</th>
-				<th>Request Date</th>
-				<th>Status</th>
-			</tr>
-		</thead>
-		<tbody>
-			@foreach (var request in Model)
-			{
-				<tr>
-					<td>@request.Request_Name</td>
-					<td>@request.Request_Description</td>
-					<td>@request.Request_Date</td>
-					<td>@request.Status</td>
-				</tr>
-			}
-		</tbody>
-	</table>
+
+<div class="container">
+    <div class="row justify-content-end mb-4">
+        <div class="col-6">
+            <h1>Your Requests</h1>
+        </div>
+        <div class="col-6 d-flex justify-content-end align-items-center">
+            <a asp-controller="CategoryRequest" asp-action="MakeRequest" class="btn btn-primary">Create New Request</a>
+        </div>
+    </div>
+
+    <partial name="_Notification" />
+
+    <div class="card">
+        <div class="card-header">
+            <h2>Request List</h2>
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var request in Model)
+                    {
+                        <tr>
+                            <td>@request.Request_Name</td>
+                            <td class="description-limiter">@request.Request_Description</td>
+                            <td>@request.Request_Date.ToString("MM/dd/yyyy")</td>
+                            <td>@request.Status</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>

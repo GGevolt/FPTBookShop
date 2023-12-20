@@ -7,33 +7,39 @@
     <form method="get" style="align-items: center; justify-content: center; display: flex">
         <div class="row">
             <div class="col-md-8">
-                <input name="search" class="form-control" placeholder="Search by Title, Author" />
+                <input name="search" class="form-control" placeholder="Search by Title, Author">
             </div>
             <div class="col-md-4">
-                <button type="submit" class="btn-info">Search</button>
+                <button type="submit" class="btn-info" style="border-radius: 5px; height: 38px;">Search</button>
             </div>
         </div>
     </form>
 </div>
-<div class="btn-group">
-    <button type="button" class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-        Category
-    </button>
-    <ul class="dropdown-menu">
-        @if (Model.Categories != null)
-        {
-            @foreach (var cate in Model.Categories)
-            {
-                <form method="get">
-                <li>
-                    <input type="hidden" name="cateID" value="@cate.ID" />
-                    <button type="submit" class="dropdown-item">@cate.Name</button>
-                </li>
-                </form>
-            }
-        }
-    </ul>
-</div>
+    <div class="row g-3 g-lg-4">
+        <div class="col-md-3">
+            <div class="category-wrapper">
+                <div class="btn-group">
+                <button type="button" class="dropdown-toggle btn-outline-primary border-1 fw-normal" data-bs-toggle="dropdown" aria-expanded="false" style="border-radius: 5px;">
+                        Category
+                    </button>
+                    <ul class="dropdown-menu shadow-sm overflow-y-auto" style="max-height: 100%px; border-radius: 5px;">
+                        @if (Model.Categories != null)
+                        {
+                            @foreach (var cate in Model.Categories)
+                            {
+                                <form method="get">
+                                <li>
+                                    <input type="hidden" name="cateID" value="@cate.ID" />
+                                    <button type="submit" class="dropdown-item border-0 fw-normal">@cate.Name</button>
+                                </li>
+                                </form>
+                            }
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
 <section class="section">
     <div class="container">
         <div class="row g-3 g-lg-4">
