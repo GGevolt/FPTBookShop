@@ -76,6 +76,7 @@ namespace FPTBookShopWeb.Areas.Identity.Pages.Account
             [Display(Name = "Home address")]
             public string Address { get; set; }
             [Required]
+            [DataType(DataType.PhoneNumber)]
             [Display(Name = "Phone Number")]
             public string PhoneNumber { get; set; }
             /// <summary>

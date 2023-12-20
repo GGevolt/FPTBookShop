@@ -60,7 +60,10 @@ namespace FPTBookShopWeb.Areas.Identity.Pages.Account.Manage
 			public string Full_Name { get; set; }
 			[Display(Name = "Home address")]
 			public string Address { get; set; }
-		}
+            [DataType(DataType.PhoneNumber)]
+            [Display(Name = "Phone Number")]
+            public string PhoneNumber { get; set; }
+        }
 
         private async Task LoadAsync(ApplicationUser user)
         {
@@ -71,7 +74,8 @@ namespace FPTBookShopWeb.Areas.Identity.Pages.Account.Manage
             Input = new InputModel
             {
 				Full_Name = user.Full_Name,
-                Address = user.Address
+                Address = user.Address,
+                PhoneNumber = user.PhoneNumber
 
 			};
         }
@@ -109,6 +113,10 @@ namespace FPTBookShopWeb.Areas.Identity.Pages.Account.Manage
             if (Input.Address != user.Address)
             {
                 user.Address = Input.Address;
+            }
+            if(Input.PhoneNumber != user.PhoneNumber)
+            {
+                user.PhoneNumber = Input.PhoneNumber;
             }
 
             await _userManager.UpdateAsync(user);
