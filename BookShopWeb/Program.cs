@@ -72,6 +72,8 @@ using (var scope = app.Services.CreateScope())
 	var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
 	string AD_email = "admin@email.com";
 	string SO_email = "storeowner@email.com";
+	string AD_phonenumber = "0913234134";
+	string SO_phonenumber = "0784346611";
 	string AD_pass = "!Admin123";
 	string SO_pass = "!StoreOwner123";
     string FullName = "Sherlock Holmes";
@@ -84,6 +86,7 @@ using (var scope = app.Services.CreateScope())
         user.Full_Name = FullName;
         user.Address = Address;
         user.EmailConfirmed = true;
+		user.PhoneNumber = AD_phonenumber;
 		userManager.CreateAsync(user, AD_pass).GetAwaiter().GetResult();
 		userManager.AddToRoleAsync(user, "Admin").GetAwaiter().GetResult();
 	}
@@ -94,6 +97,7 @@ using (var scope = app.Services.CreateScope())
 		user.UserName = SO_email;
 		user.Full_Name = FullName;
 		user.Address = Address;
+		user.PhoneNumber = SO_phonenumber;
         user.EmailConfirmed = true;
 		userManager.CreateAsync(user, SO_pass).GetAwaiter().GetResult();
 		userManager.AddToRoleAsync(user, "StoreOwner").GetAwaiter().GetResult();
