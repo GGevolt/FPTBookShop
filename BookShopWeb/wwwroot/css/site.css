@@ -42,6 +42,42 @@ body {
     align-items: center;
     height: 80px;
 }
+
 .nav-link {
     transition: all 0.3s ease;
+}
+
+.card-text {
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Show a maximum of 3 lines */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.card-title {
+    display: -webkit-box;
+    -webkit-line-clamp: 1; /* Adjust the number of lines as needed */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Align items at top and bottom */
+}
+
+.description-wrapper {
+    display: -webkit-box;
+    -webkit-line-clamp: 10; /* Adjust the number of lines as needed */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    vertical-align: top;
+}
+
+.description-limiter {
+    max-width: 250px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
