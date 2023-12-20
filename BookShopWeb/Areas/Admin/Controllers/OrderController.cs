@@ -21,7 +21,8 @@ namespace FPTBookShopWeb.Areas.Admin.Controllers
             OrderVM orderVM = new OrderVM()
             {
                OrderHeaderes = _unitOfWork.OrderHeaderRepository.GetAll().ToList(),
-            };
+				OrderDetailes = _unitOfWork.OrderDetailRepository.GetAll(includeProperty: "book").ToList()
+			};
             return View(orderVM);
         }
     }
