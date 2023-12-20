@@ -87,8 +87,9 @@ namespace FPTBookShopWeb.Areas.Customer.Controllers
 			foreach (var cart in ShoppingcartVM.ShoppingcartList)
 			{
 				if (cart.Count > cart.book.Quantity) {
-                    TempData["error"] = "Out of stock, Sombody already order the last stock";
                     _unitOfWork.ShoppingcartRepository.Remove(cart);
+                    TempData["error"] = "Out of stock, Sombody already order the last stock";
+                    _unitOfWork.Save();
                     return RedirectToAction(nameof(Index));
                 }
 				OrderDetail orderDetail = new()
@@ -98,10 +99,9 @@ namespace FPTBookShopWeb.Areas.Customer.Controllers
 					Price = cart.Price,
 					Count = cart.Count
 				};
-				_unitOfWork.OrderDetailRepository.Add(orderDetail);
-				_unitOfWork.Save();
-				cart.book.Quantity -= cart.Count;
-				_unitOfWork.BookRepository.Update(cart.book);
+                cart.book.Quantity -= cart.Count;
+                _unitOfWork.BookRepository.Update(cart.book);
+                _unitOfWork.OrderDetailRepository.Add(orderDetail);
 				_unitOfWork.Save();
 			}
             foreach (var cart in ShoppingcartVM.ShoppingcartList)
