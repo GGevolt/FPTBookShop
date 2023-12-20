@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ApplicationUser>
+﻿@model IEnumerable<AccountVM>
 <partial name="_Notification" />
 <div class="row pt-4 pb-4">
 	<div class="col-9">
@@ -37,17 +37,57 @@
 				<th>Email</th>
 				<th>Full Name</th>
 				<th>Home Address</th>
+				<th>Role</th>
 			</tr>
 		</thead>
 		<tbody>
-			@foreach (var user in Model)
+			@foreach (var account in Model)
 			{
 				<tr>
-					<td>@user.Email</td>
-					<td>@user.Full_Name</td>
-					<td>@user.Address</td>
+					<td>@account.User.Email</td>
+					<td>@account.User.Full_Name</td>
+					<td>@account.User.Address</td>
 					<td>
-						<a asp-controller="Account" asp-action="ChangePassword" asp-route-id="@user.Id" class="btn btn-primary"><i class="bi bi-pencil"></i> Reset Password</a>
+						@foreach (var role in account.Roles)
+						{
+							@role
+						}
+					</td>
+					<td>
+						<a asp-controller="Account" asp-action="ChangePassword" asp-route-id="@account.User.Id" class="btn btn-primary"><i class="bi bi-pencil"></i> Reset Password</a>
+					</td>
+					<td>
+						<div class="btn-group">
+							<button type="button" class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+								Assign Role
+							</button>
+							<ul class="dropdown-menu">
+								@using (Html.BeginForm("AssignRole", "Account"))
+								{
+									<li>
+										<input type="hidden" name="userId" value="@account.User.Id" />
+										<input type="hidden" name="newrole" value="Customer" />
+										<button type="submit" class="dropdown-item">Customer</button>
+									</li>
+								}
+								@using (Html.BeginForm("AssignRole", "Account"))
+								{
+									<li>
+										<input type="hidden" name="userId" value="@account.User.Id" />
+										<input type="hidden" name="newrole" value="StoreOwner" />
+										<button type="submit" class="dropdown-item">Store Owner</button>
+									</li>
+								}
+								@using (Html.BeginForm("AssignRole", "Account"))
+								{
+									<li>
+										<input type="hidden" name="userId" value="@account.User.Id" />
+										<input type="hidden" name="newrole" value="Admin" />
+										<button type="submit" class="dropdown-item">Admin</button>
+									</li>
+								}
+							</ul>
+						</div>
 					</td>
 				</tr>
 			}

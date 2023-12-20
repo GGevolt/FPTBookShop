@@ -20,8 +20,6 @@ namespace FPTBookShopWeb.Areas.Admin.Controllers
 			List<Request> requests = _unitOfWork.RequestRepository.GetAll().ToList();
 			return View(requests);
 		}
-
-
 		[HttpPost]
 		public IActionResult ApproveRequest(int? id)
 		{

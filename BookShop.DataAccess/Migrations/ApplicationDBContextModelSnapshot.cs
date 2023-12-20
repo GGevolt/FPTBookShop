@@ -197,6 +197,24 @@ namespace FPTBookShop.DataAccess.Migrations
                         });
                 });
 
+                    b.ToTable("OrderStatus");
+                });
+
+                    b.ToTable("OrderStatus");
+                });
+
+                    b.ToTable("OrderStatus");
+                });
+
+                    b.ToTable("OrderStatus");
+                });
+
+                    b.ToTable("OrderStatus");
+                });
+
+                    b.ToTable("OrderStatus");
+                });
+
             modelBuilder.Entity("FPTBookShop.Models.Request", b =>
                 {
                     b.Property<int>("ID")
