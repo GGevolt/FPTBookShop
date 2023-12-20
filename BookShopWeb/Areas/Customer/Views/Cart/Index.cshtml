@@ -73,7 +73,7 @@
                         </ul>
                     </div>
                 </div>
-                @if (Model.ShoppingcartList == null)
+                @if (Model.ShoppingcartList != null && Model.ShoppingcartList.Any())
                 {
                     <div class="row">
                         <div class="col-md-2 offset-md-5">

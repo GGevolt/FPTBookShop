@@ -86,6 +86,11 @@ namespace FPTBookShopWeb.Areas.Customer.Controllers
 
 			foreach (var cart in ShoppingcartVM.ShoppingcartList)
 			{
+				if (cart.Count > cart.book.Quantity) {
+                    TempData["error"] = "Out of stock, Sombody already order the last stock";
+                    _unitOfWork.ShoppingcartRepository.Remove(cart);
+                    return RedirectToAction(nameof(Index));
+                }
 				OrderDetail orderDetail = new()
 				{
 					ProductID = cart.BookID,
