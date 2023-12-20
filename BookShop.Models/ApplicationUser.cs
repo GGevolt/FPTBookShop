@@ -8,5 +8,5 @@ namespace FPTBookShop.Models
         [Required]
         public string Full_Name { get; set; }
         public string Address {  get; set; }
-    }
+	}
 }
