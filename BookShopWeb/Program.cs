@@ -76,6 +76,7 @@ using (var scope = app.Services.CreateScope())
 	string SO_pass = "!StoreOwner123";
     string FullName = "Sherlock Holmes";
     string Address = "221B Baker Street";
+	string PhoneNumber = "0123456789";
     if (userManager.FindByEmailAsync(AD_email).GetAwaiter().GetResult() == null)
 	{
 		var user = new ApplicationUser();
@@ -83,6 +84,7 @@ using (var scope = app.Services.CreateScope())
 		user.UserName = AD_email;
         user.Full_Name = FullName;
         user.Address = Address;
+		user.PhoneNumber = PhoneNumber;
         user.EmailConfirmed = true;
 		userManager.CreateAsync(user, AD_pass).GetAwaiter().GetResult();
 		userManager.AddToRoleAsync(user, "Admin").GetAwaiter().GetResult();
@@ -94,6 +96,7 @@ using (var scope = app.Services.CreateScope())
 		user.UserName = SO_email;
 		user.Full_Name = FullName;
 		user.Address = Address;
+        user.PhoneNumber = PhoneNumber;
         user.EmailConfirmed = true;
 		userManager.CreateAsync(user, SO_pass).GetAwaiter().GetResult();
 		userManager.AddToRoleAsync(user, "StoreOwner").GetAwaiter().GetResult();
