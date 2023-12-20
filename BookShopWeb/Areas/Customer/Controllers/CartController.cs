@@ -76,7 +76,7 @@ namespace FPTBookShopWeb.Areas.Customer.Controllers
 			{
 				cart.Price = PriceofBook(cart);
 				ShoppingcartVM.OrderHeader.OrderTotal += (cart.Price * cart.Count);
-			}
+            }
 
 			ShoppingcartVM.OrderHeader.PaymentStatus = SD.PaymentStatusApprove;
 			ShoppingcartVM.OrderHeader.OrderStatus = SD.StatusApprove;
@@ -86,6 +86,12 @@ namespace FPTBookShopWeb.Areas.Customer.Controllers
 
 			foreach (var cart in ShoppingcartVM.ShoppingcartList)
 			{
+				if (cart.Count > cart.book.Quantity) {
+                    _unitOfWork.ShoppingcartRepository.Remove(cart);
+                    TempData["error"] = "Out of stock, Sombody already order the last stock";
+                    _unitOfWork.Save();
+                    return RedirectToAction(nameof(Index));
+                }
 				OrderDetail orderDetail = new()
 				{
 					ProductID = cart.BookID,
@@ -93,11 +99,17 @@ namespace FPTBookShopWeb.Areas.Customer.Controllers
 					Price = cart.Price,
 					Count = cart.Count
 				};
-				_unitOfWork.OrderDetailRepository.Add(orderDetail);
+                cart.book.Quantity -= cart.Count;
+                _unitOfWork.BookRepository.Update(cart.book);
+                _unitOfWork.OrderDetailRepository.Add(orderDetail);
 				_unitOfWork.Save();
 			}
-	
-			return RedirectToAction(nameof(OrderConfirm), new {id = ShoppingcartVM.OrderHeader.Id});
+            foreach (var cart in ShoppingcartVM.ShoppingcartList)
+			{
+                _unitOfWork.ShoppingcartRepository.Remove(cart);
+            }
+            _unitOfWork.Save();
+            return RedirectToAction(nameof(OrderConfirm), new {id = ShoppingcartVM.OrderHeader.Id});
 		}
 		public IActionResult OrderConfirm(int id)
 		{
@@ -105,11 +117,18 @@ namespace FPTBookShopWeb.Areas.Customer.Controllers
 		}
 		public IActionResult Plus(int cartID)
 		{
-			var cartFromdDb = _unitOfWork.ShoppingcartRepository.Get(u => u.Id == cartID);
-			cartFromdDb.Count += 1;
-			_unitOfWork.ShoppingcartRepository.Update(cartFromdDb);
-			_unitOfWork.Save();
-			return RedirectToAction(nameof(Index));
+			var cartFromdDb = _unitOfWork.ShoppingcartRepository.Get(u => u.Id == cartID, includeProperty: "book");
+			if (cartFromdDb.Count < cartFromdDb.book.Quantity)
+			{
+				cartFromdDb.Count += 1;
+				_unitOfWork.ShoppingcartRepository.Update(cartFromdDb);
+				_unitOfWork.Save();
+			}
+            else
+            {
+                TempData["error"] = "Out of stock can't add more";
+            }
+            return RedirectToAction(nameof(Index));
 		}
 		public IActionResult Minus(int cartID)
 		{

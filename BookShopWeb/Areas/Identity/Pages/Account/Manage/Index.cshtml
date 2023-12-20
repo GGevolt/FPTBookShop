@@ -34,6 +34,53 @@
         </form>
     </div>
 </div>
+@if (User.IsInRole("Customer"))
+{
+	<div class="row pt-4 pb-4">
+		<div class="col-9">
+			<h2>List of Order</h2>
+		</div>
+	</div>
+	<div>
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Phone</th>
+					<th>Address</th>
+					<th>City</th>
+					<th>Order Status</th>
+					<th>Order Total</th>
+					<th>Date Order</th>
+					<th>Books Ordered</th>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach (var orderHeader in Model.OrderVM.OrderHeaderes)
+				{
+					<tr>
+						<td>@orderHeader.Name</td>
+						<td>@orderHeader.PhoneNumber</td>
+						<td>@orderHeader.Address</td>
+						<td>@orderHeader.City</td>
+						<td>@orderHeader.OrderStatus</td>
+						<td>@orderHeader.OrderTotal</td>
+						<td>@orderHeader.OrderDate</td>
+						<td>
+							<ul>
+								@foreach (var orderDetail in Model.OrderVM.OrderDetailes.Where(o => o.OrderHeaderID == orderHeader.Id))
+								{
+									<li>Title: @orderDetail.book.Title</li>
+									<li>Book count: @orderDetail.Count</li>
+								}
+							</ul>
+						</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+	</div>
+}
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

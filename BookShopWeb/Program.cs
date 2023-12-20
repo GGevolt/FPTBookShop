@@ -14,7 +14,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.WebHost.ConfigureKestrel(c =>
 {
-    c.Limits.KeepAliveTimeout = TimeSpan.FromMinutes(20);
+    c.Limits.KeepAliveTimeout = TimeSpan.FromMinutes(30);
 });
 // Add services to the container.
 builder.Services.AddControllersWithViews();

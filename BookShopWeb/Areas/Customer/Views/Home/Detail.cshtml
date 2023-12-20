@@ -15,6 +15,15 @@
                     <h2>@Model.book.Title</h2>
                 </div>
                 <div class="row mb-3">
+                    @if (Model.book.BookCategories != null)
+                    {
+                        @foreach (var category in Model.book.BookCategories.Select(bc => bc.Category))
+                        {
+                            <a>@category.Name</a> <br />
+                        }
+                    }
+                </div>
+                <div class="row mb-3">
                     <h4>@Model.book.Description</h4>
                 </div>
                 <div class="row mb-3">
@@ -24,17 +33,18 @@
                     Book left
                     <h4>@Model.book.Quantity</h4>
                 </div>
+                @if (Model.book.Quantity == 0)
+                {
+                    <span class="btn btn-danger">Out of stock</span>
+                }else{
                 <form method="post">
                     <input hidden asp-for="BookID" />
-                   
                 <div class="row pl-2 mb-3">
                     <div class="input-group mb-3">
                        <span class="input-group-text bg-primary text-black border-0 fw-semibold" id="inputGroup-sizing-default">
                            Count
                        </span>
-                       <input asp-for="Count" type="number" value="1" class="form-control text-end"
-                       aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
-                       />
+                        <input asp-for="Count" type="number" value="1" class="form-control text-end" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" min="1" max="@Model.book.Quantity" />
                     </div>
                 </div>
                 <div class="row">
@@ -45,15 +55,7 @@
                     </div>
                 </div>
                 </form>
-                <div class="row mb-3">
-                @if (Model.book.BookCategories != null)
-                {
-                    @foreach (var category in Model.book.BookCategories.Select(bc => bc.Category))
-                    {
-                        <a>@category.Name</a> <br />
-                    }
                 }
-                </div>
             </div>
         </div>
 </div>
