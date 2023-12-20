@@ -96,8 +96,12 @@ namespace FPTBookShopWeb.Areas.Customer.Controllers
 				_unitOfWork.OrderDetailRepository.Add(orderDetail);
 				_unitOfWork.Save();
 			}
-	
-			return RedirectToAction(nameof(OrderConfirm), new {id = ShoppingcartVM.OrderHeader.Id});
+            foreach (var cart in ShoppingcartVM.ShoppingcartList)
+			{
+                _unitOfWork.ShoppingcartRepository.Remove(cart);
+            }
+            _unitOfWork.Save();
+            return RedirectToAction(nameof(OrderConfirm), new {id = ShoppingcartVM.OrderHeader.Id});
 		}
 		public IActionResult OrderConfirm(int id)
 		{

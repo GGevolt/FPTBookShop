@@ -1,4 +1,4 @@
-﻿@model FPTBookShop.Models.ViewModel.OrderVM
+﻿@model OrderVM
 <partial name="_Notification" />
 <div class="row pt-4 pb-4">
 	<div class="col-9">
@@ -34,8 +34,8 @@
 						<ul>
 							@foreach (var orderDetail in Model.OrderDetailes.Where(o => o.OrderHeaderID == orderHeader.Id))
 							{
-								<li>@orderDetail.book.Title</li>
-								<li>@orderDetail.Count</li>
+								<li>Title: @orderDetail.book.Title</li>
+								<li>Book count: @orderDetail.Count</li>
 							}
 						</ul>
 					</td>

@@ -4,10 +4,10 @@ using FPTBookShop.Models.ViewModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace FPTBookShopWeb.Areas.Admin.Controllers
+namespace FPTBookShopWeb.Areas.StoreOwner.Controllers
 {
-    [Area("Admin")]
-    [Authorize(Roles = "Admin")]
+    [Area("StoreOwner")]
+    [Authorize(Roles = "StoreOwner")]
     public class OrderController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -20,9 +20,9 @@ namespace FPTBookShopWeb.Areas.Admin.Controllers
         {
             OrderVM orderVM = new OrderVM()
             {
-               OrderHeaderes = _unitOfWork.OrderHeaderRepository.GetAll().ToList(),
-				OrderDetailes = _unitOfWork.OrderDetailRepository.GetAll(includeProperty: "book").ToList()
-			};
+                OrderHeaderes = _unitOfWork.OrderHeaderRepository.GetAll().ToList(),
+                OrderDetailes = _unitOfWork.OrderDetailRepository.GetAll(includeProperty: "book").ToList()
+            };
             return View(orderVM);
         }
     }
