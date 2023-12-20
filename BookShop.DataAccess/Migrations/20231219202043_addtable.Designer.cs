@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FPTBookShop.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20231219095031_add-alltable")]
-    partial class addalltable
+    [Migration("20231219202043_addtable")]
+    partial class addtable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -138,6 +138,9 @@ namespace FPTBookShop.DataAccess.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Id")
                         .HasColumnType("int");
 
                     b.HasKey("BookId", "CategoryId");

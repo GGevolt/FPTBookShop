@@ -8,6 +8,8 @@
         IRequestRepository RequestRepository { get; }
         IShoppingcartRepository ShoppingcartRepository { get; }
         IApplicationUserRepository ApplicationUserRepository { get; }
+        IOrderDetailRepository OrderDetailRepository { get; }
+        IOrderHeaderRepository OrderHeaderRepository { get; }
         void Save();
     }
 }

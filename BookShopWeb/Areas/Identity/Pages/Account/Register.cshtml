@@ -23,6 +23,11 @@
                 <span asp-validation-for="Input.Address" class="text-danger"></span>
             </div>
             <div class="form-floating mb-3">
+                <input asp-for="Input.PhoneNumber" class="form-control" aria-required="true" />
+                <label asp-for="Input.PhoneNumber">Phone Number</label>
+                <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-3">
                 <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" />
                 <label asp-for="Input.Email">Email</label>
                 <span asp-validation-for="Input.Email" class="text-danger"></span>

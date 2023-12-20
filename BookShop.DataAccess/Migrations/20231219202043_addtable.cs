@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace FPTBookShop.DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class addalltable : Migration
+    public partial class addtable : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -234,7 +234,8 @@ namespace FPTBookShop.DataAccess.Migrations
                 columns: table => new
                 {
                     BookId = table.Column<int>(type: "int", nullable: false),
-                    CategoryId = table.Column<int>(type: "int", nullable: false)
+                    CategoryId = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {

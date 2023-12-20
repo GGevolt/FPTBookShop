@@ -16,6 +16,8 @@ namespace FPTBookShop.DataAccess.Repository
         public IRequestRepository RequestRepository { get; private set; }
         public IShoppingcartRepository ShoppingcartRepository { get; private set; }
         public IApplicationUserRepository ApplicationUserRepository { get; private set; }
+        public IOrderHeaderRepository OrderHeaderRepository { get; private set; }
+        public IOrderDetailRepository OrderDetailRepository { get; private set; }
         public UnitOfWorks(ApplicationDBContext dBContext)
         {
             _dbContext = dBContext;
@@ -25,6 +27,9 @@ namespace FPTBookShop.DataAccess.Repository
             RequestRepository = new RequestRepository(dBContext);
             ShoppingcartRepository = new ShoppingcartRepository(dBContext);
             ApplicationUserRepository = new ApplicationUserRepository(dBContext);
+            OrderHeaderRepository = new OrderHeaderRepository(dBContext);
+            OrderDetailRepository = new OrderDetailRepository(dBContext);
+
         }
 
         public void Save()

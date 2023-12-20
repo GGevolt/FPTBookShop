@@ -1,5 +1,7 @@
 ﻿
 
+using System.ComponentModel.DataAnnotations;
+
 namespace FPTBookShop.Models
 {
 	public class BookCategory

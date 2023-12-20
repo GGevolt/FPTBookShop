@@ -30,17 +30,17 @@ namespace FPTBookShopWeb.Areas.Customer.Controllers
             if (!string.IsNullOrEmpty(search))
             {
                 search = search.ToLower();
-                homeVM.Books = _unitOfWork.BookRepository.GetAll("BookCategories.Category").Where(b => b.Title.ToLower().Contains(search) || b.Author.ToLower().Contains(search)).ToList();
+                homeVM.Books = _unitOfWork.BookRepository.GetAll(includeProperty:"BookCategories.Category").Where(b => b.Title.ToLower().Contains(search) || b.Author.ToLower().Contains(search)).ToList();
                 return View(homeVM);
             }
             if (cateID != 0 && cateID != null)
             {
-                List<Book> books = _unitOfWork.BookRepository.GetAll("BookCategories.Category").ToList();
+                List<Book> books = _unitOfWork.BookRepository.GetAll(includeProperty: "BookCategories.Category").ToList();
                 List<int> bookIDs = _unitOfWork.BookCategoryRepository.GetAll().Where(bc => bc.CategoryId == cateID).Select(bc => bc.BookId).ToList();
                 homeVM.Books = books.Where(b => bookIDs.Contains(b.ID)).ToList();
                 return View(homeVM);
             }
-            homeVM.Books = _unitOfWork.BookRepository.GetAll("BookCategories.Category").ToList();
+            homeVM.Books = _unitOfWork.BookRepository.GetAll(includeProperty: "BookCategories.Category").ToList();
             return View(homeVM);
         }
 
@@ -63,11 +63,21 @@ namespace FPTBookShopWeb.Areas.Customer.Controllers
             string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             shoppingCart.UserID = userId;
             shoppingCart.Id = 0;
-            _unitOfWork.ShoppingcartRepository.Add(shoppingCart);
+            ShoppingCart cartFromDb = _unitOfWork.ShoppingcartRepository.Get(u => u.UserID == userId && u.BookID == shoppingCart.BookID);
+            if (cartFromDb != null) 
+            {
+                cartFromDb.Count += shoppingCart.Count;
+                _unitOfWork.ShoppingcartRepository.Update(cartFromDb);
+            }
+            else
+            {
+                _unitOfWork.ShoppingcartRepository.Add(shoppingCart);
+            }
+            /*_unitOfWork.ShoppingcartRepository.Add(shoppingCart);*/
             _unitOfWork.Save();
+            TempData["success"] = "Cart Update Sucessfully";
             return RedirectToAction(nameof(Index));
         }
-
         public IActionResult Privacy()
         {
             return View();

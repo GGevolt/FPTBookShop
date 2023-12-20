@@ -21,29 +21,43 @@ namespace FPTBookShop.DataAccess.Repository
              dbSet.Add(entity);
         }
 
-        public T Get(Expression<Func<T, bool>> filter, string? includeProperty = null)
+        public T Get(Expression<Func<T, bool>> filter, string? includeProperty = null, bool tracker = false)
         {
             IQueryable<T> query = dbSet;
+            if (tracker)
+            {
+                query = dbSet;
+            }
+            else
+            {
+                query = dbSet.AsNoTracking();
+                
+            }
             query = query.Where(filter);
             if (!String.IsNullOrEmpty(includeProperty))
             {
-				query = query.Include(includeProperty);
+                query = query.Include(includeProperty);
             }
             return query.FirstOrDefault();
         }
 
-        public IEnumerable<T> GetAll(string? includeProperty = null)
+        public IEnumerable<T> GetAll(Expression<Func<T, bool>>? filter, string? includeProperty = null)
         {
-            
+
             IQueryable<T> query = dbSet;
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
             if (!String.IsNullOrEmpty(includeProperty))
             {
-				query = query.Include(includeProperty);
+                query = query.Include(includeProperty);
             }
             return query.ToList();
         }
 
-		public void Remove(T entity)
+
+        public void Remove(T entity)
         {
             dbSet.Remove(entity);
         }
