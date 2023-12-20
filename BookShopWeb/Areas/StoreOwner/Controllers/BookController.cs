@@ -24,7 +24,7 @@ namespace FPTBookShopWeb.Areas.StoreOwner.Controllers
         }
         public IActionResult Index()
         {
-            List<Book> books = _unitOfWork.BookRepository.GetAll("BookCategories.Category").ToList();
+            List<Book> books = _unitOfWork.BookRepository.GetAll(includeProperty: "BookCategories.Category").ToList();
             return View(books);
         }
         public IActionResult CreateUpdate(int? id)
