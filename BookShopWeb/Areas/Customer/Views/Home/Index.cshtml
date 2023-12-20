@@ -2,6 +2,7 @@
 @{
     ViewData["Title"] = "Home Page";
 }
+<partial name="_Notification" />
 <div class="banner">
     <form method="get" style="align-items: center; justify-content: center; display: flex">
         <div class="row">
@@ -43,10 +44,7 @@
                     <h5 class="card-title">@Book.Title</h5>
                     <p class="card-text">@Book.Description</p>
                     <h6 class="card-title">Price: @Book.Price $</h6>
-                        <a asp-area="Customer" asp-controller="Home" asp-action="Detail" asp-route-id="@Book.ID" class="btn btn-primary">Detail</a>
-                        @if (User.IsInRole("Customer")){
-                            <button type="button" onclick="add(@Book.ID)" class="btn btn-primary">add to cart</button>
-                        }
+                        <a asp-area="Customer" asp-controller="Home" asp-action="Detail" asp-route-id="@Book.ID" class="btn btn-primary">Detail</a>        
                   </div>
                 </div>
              }
