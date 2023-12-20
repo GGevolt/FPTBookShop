@@ -1,0 +1,32 @@
+﻿@model FPTBookShop.Models.ViewModel.OrderVM
+<partial name="_Notification" />
+<div class="row pt-4 pb-4">
+	<div class="col-9">
+		<h2>List of Order</h2>
+	</div>
+</div>
+<div>
+	<table class="table table-bordered">
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Phone</th>
+				<th>Address</th>
+				<th>City</th>
+				<th>OrderStatus</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var orderHeader in Model.OrderHeaderes)
+			{
+				<tr>
+					<td>@orderHeader.Name</td>
+					<td>@orderHeader.PhoneNumber</td>
+					<td>@orderHeader.Address</td>
+					<td>@orderHeader.City</td>
+					<td>@orderHeader.OrderStatus</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+</div>

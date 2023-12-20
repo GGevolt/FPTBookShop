@@ -75,9 +75,12 @@ namespace FPTBookShopWeb.Areas.Identity.Pages.Account
             [Required]
             [Display(Name = "Home address")]
             public string Address { get; set; }
-            [Required]
+			[Required]
+			[Display(Name = "City")]
+			public string City { get; set; }
+			[Required]
             [DataType(DataType.PhoneNumber)]
-            [Display(Name = "Phone Number")]
+            [Display(Name = "Phone Number")]        
             public string PhoneNumber { get; set; }
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
@@ -121,7 +124,7 @@ namespace FPTBookShopWeb.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { Full_Name = Input.Full_Name, Address = Input.Address, PhoneNumber = Input.PhoneNumber };
+                var user = new ApplicationUser { Full_Name = Input.Full_Name, Address = Input.Address, PhoneNumber = Input.PhoneNumber, City = Input.City };
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
