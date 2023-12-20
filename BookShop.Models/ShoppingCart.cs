@@ -13,7 +13,7 @@ namespace FPTBookShop.Models
     {
         [Key]
         public int Id { get; set; }
-        public int? BookID { get; set; }
+        public int BookID { get; set; }
         [ForeignKey("BookID")]
         [ValidateNever]
         public Book? book { get; set; }
