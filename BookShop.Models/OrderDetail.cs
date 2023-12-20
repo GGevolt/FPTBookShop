@@ -9,18 +9,21 @@ using System.Threading.Tasks;
 
 namespace FPTBookShop.Models
 {
-    public class ShoppingCart
+    public class OrderDetail
     {
-        [Key]
         public int Id { get; set; }
-        public int? BookID { get; set; }
-        [ForeignKey("BookID")]
+        [Required]
+        public int OrderHeaderID { get; set; }
+        [ForeignKey("OrderHeaderID")]
         [ValidateNever]
-        public Book? book { get; set; }
-        [Range(1, 188, ErrorMessage = "188bet friend of people")]
+        public OrderHeader OrderHeader { get; set; }
+        [Required]
+        public int ProductID { get; set; }
+        [ForeignKey("ProductID")]
+        [ValidateNever]
+        public Book book { get; set; }
         public int Count { get; set; }
-        public string UserID { get; set; }
-        [NotMapped]
         public double Price { get; set; }
+
     }
 }
