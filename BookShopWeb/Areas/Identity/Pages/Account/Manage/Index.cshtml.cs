@@ -6,7 +6,9 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using FPTBookShop.DataAccess.Repository.IRepository;
 using FPTBookShop.Models;
+using FPTBookShop.Models.ViewModel;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -17,13 +19,15 @@ namespace FPTBookShopWeb.Areas.Identity.Pages.Account.Manage
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
-
+        private readonly IUnitOfWork _unitOfWork;
         public IndexModel(
             UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager)
+            SignInManager<ApplicationUser> signInManager,
+            IUnitOfWork unitOfWork)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _unitOfWork = unitOfWork;
         }
 
         /// <summary>
@@ -31,6 +35,7 @@ namespace FPTBookShopWeb.Areas.Identity.Pages.Account.Manage
         ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
         public string Username { get; set; }
+        public OrderVM OrderVM { get; set; }
 
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
@@ -70,14 +75,19 @@ namespace FPTBookShopWeb.Areas.Identity.Pages.Account.Manage
             var userName = await _userManager.GetUserNameAsync(user);
 
             Username = userName;
+			OrderVM = new OrderVM()
+            {
+                OrderHeaderes = _unitOfWork.OrderHeaderRepository.GetAll().Where(r => r.UserId == user.Id).ToList(),
+                OrderDetailes = _unitOfWork.OrderDetailRepository.GetAll(includeProperty: "book").ToList()
+            };
 
-            Input = new InputModel
+
+			Input = new InputModel
             {
 				Full_Name = user.Full_Name,
                 Address = user.Address,
-                PhoneNumber = user.PhoneNumber
-
-			};
+                PhoneNumber = user.PhoneNumber,
+            };
         }
 
         public async Task<IActionResult> OnGetAsync()
@@ -88,7 +98,6 @@ namespace FPTBookShopWeb.Areas.Identity.Pages.Account.Manage
                 return NotFound(
                     $"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
-
             await LoadAsync(user);
             return Page();
         }

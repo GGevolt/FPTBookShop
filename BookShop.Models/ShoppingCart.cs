@@ -13,10 +13,10 @@ namespace FPTBookShop.Models
     {
         [Key]
         public int Id { get; set; }
-        public int? BookID { get; set; }
+        public int BookID { get; set; }
         [ForeignKey("BookID")]
         [ValidateNever]
-        public Book? book { get; set; }
+        public Book book { get; set; }
         [Range(1, 188, ErrorMessage = "188bet friend of people")]
         public int Count { get; set; }
         public string UserID { get; set; }

@@ -25,6 +25,7 @@ namespace FPTBookShop.Models
         public string? Carrier { get;set; }
         public DateTime PaymentDate { get; set; }
         public DateTime PaymenDueDate { get; set; }
+        public string? SessionID { get; set; }
         public string? PaymentIntentId { get; set; }
         [Required]
         public string PhoneNumber { get; set; }
@@ -34,7 +35,5 @@ namespace FPTBookShop.Models
         public string City { get; set; }
         [Required]
         public string Name { get; set; }
-        [Required]
-        public string Country { get; set; }
     }
 }
