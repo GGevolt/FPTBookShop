@@ -76,7 +76,7 @@ namespace FPTBookShopWeb.Areas.Customer.Controllers
 			{
 				cart.Price = PriceofBook(cart);
 				ShoppingcartVM.OrderHeader.OrderTotal += (cart.Price * cart.Count);
-			}
+            }
 
 			ShoppingcartVM.OrderHeader.PaymentStatus = SD.PaymentStatusApprove;
 			ShoppingcartVM.OrderHeader.OrderStatus = SD.StatusApprove;
@@ -95,6 +95,9 @@ namespace FPTBookShopWeb.Areas.Customer.Controllers
 				};
 				_unitOfWork.OrderDetailRepository.Add(orderDetail);
 				_unitOfWork.Save();
+				cart.book.Quantity -= cart.Count;
+				_unitOfWork.BookRepository.Update(cart.book);
+				_unitOfWork.Save();
 			}
             foreach (var cart in ShoppingcartVM.ShoppingcartList)
 			{
@@ -109,11 +112,18 @@ namespace FPTBookShopWeb.Areas.Customer.Controllers
 		}
 		public IActionResult Plus(int cartID)
 		{
-			var cartFromdDb = _unitOfWork.ShoppingcartRepository.Get(u => u.Id == cartID);
-			cartFromdDb.Count += 1;
-			_unitOfWork.ShoppingcartRepository.Update(cartFromdDb);
-			_unitOfWork.Save();
-			return RedirectToAction(nameof(Index));
+			var cartFromdDb = _unitOfWork.ShoppingcartRepository.Get(u => u.Id == cartID, includeProperty: "book");
+			if (cartFromdDb.Count < cartFromdDb.book.Quantity)
+			{
+				cartFromdDb.Count += 1;
+				_unitOfWork.ShoppingcartRepository.Update(cartFromdDb);
+				_unitOfWork.Save();
+			}
+            else
+            {
+                TempData["error"] = "Out of stock can't add more";
+            }
+            return RedirectToAction(nameof(Index));
 		}
 		public IActionResult Minus(int cartID)
 		{
