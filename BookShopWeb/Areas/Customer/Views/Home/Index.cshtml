@@ -44,7 +44,7 @@
     <div class="container">
         <div class="row g-3 g-lg-4">
             @foreach (var Book in Model.Books){
-                <div class="card" style="width: 14rem;">
+                <div class="card col-2">
                     <img src="@Book.Book_Image" class="card-img-top" alt="Book image" style="width: 12rem; height: 300px;">
                   <div class="card-body">
                     <h5 class="card-title">@Book.Title</h5>

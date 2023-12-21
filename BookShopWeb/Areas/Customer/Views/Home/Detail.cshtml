@@ -31,11 +31,8 @@
                     }
                 }
             </div>
-            <div class="mb-3">
-                <h5 style="display: inline-block;">Description: </h5> 
-                <div class="description-wrapper">
-                    <a>@Model.book.Description</a>
-                </div>
+            <div class="mb-3 description-wrapper">
+                <h5 style="display: inline-block;">Description: </h5>@Model.book.Description
             </div>
             <div class="row mb-3">
                 <h5>Price: <a style="color:red">@Model.book.Price$</a></h5>
@@ -45,15 +42,12 @@
             </div>
             <form method="post">
                 <input hidden asp-for="BookID" />
-
                 <div class="row pl-2 mb-3">
                     <div class="input-group mb-3">
                         <span class="input-group-text bg-primary text-black border-0 fw-semibold" id="inputGroup-sizing-default">
                             Count
                         </span>
-                        <input asp-for="Count" type="number" value="1" class="form-control text-end"
-                               aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" />
-                       />
+                        <input asp-for="Count" type="number" value="1" class="form-control text-end" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" />
                     </div>
                 </div>
                 <div class="row">
@@ -62,15 +56,8 @@
                             Add to cart
                         </button>
                     </div>
+                </div>
             </form>
         </div>
     </div>
-</div>                    @foreach (var category in Model.book.BookCategories.Select(bc => bc.Category))
-                    {
-                        <a>@category.Name</a> <br />
-                    }
-                }
-                </div>
-            </div>
-        </div>
 </div>
