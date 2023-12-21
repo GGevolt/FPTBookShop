@@ -17,7 +17,7 @@ namespace FPTBookShopWeb.Areas.Admin.Controllers
 		[HttpGet]
 		public IActionResult Index()
 		{
-			List<Request> requests = _unitOfWork.RequestRepository.GetAll().ToList();
+			List<Request> requests = _unitOfWork.RequestRepository.GetAll().Where(r=>r.Status == "Pending").ToList();
 			return View(requests);
 		}
 		[HttpPost]

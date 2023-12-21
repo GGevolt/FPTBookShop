@@ -22,9 +22,14 @@ namespace FPTBookShopWeb.Areas.StoreOwner.Controllers
             _unitOfWork = unitOfWork;
             _webhost = webhost;
         }
-        public IActionResult Index()
+        public IActionResult Index(string? search)
         {
             List<Book> books = _unitOfWork.BookRepository.GetAll(includeProperty: "BookCategories.Category").ToList();
+            if (!string.IsNullOrEmpty(search))
+            {
+                search = search.ToLower();
+                books = _unitOfWork.BookRepository.GetAll(includeProperty: "BookCategories.Category").Where(b => b.Title.ToLower().Contains(search) || b.Author.ToLower().Contains(search)).ToList();
+            }
             return View(books);
         }
         public IActionResult CreateUpdate(int? id)
