@@ -22,25 +22,36 @@ namespace FPTBookShopWeb.Areas.Customer.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index(string? search, int? cateID)
+        public IActionResult Index(string? search, string? sort, int currentPage =1)
         {
+            int pageSize = 5;
             HomeVM homeVM = new HomeVM() {
                 Categories = _unitOfWork.CategoryRepository.GetAll().ToList()
             };
+            homeVM.Books = _unitOfWork.BookRepository.GetAll(includeProperty: "BookCategories.Category").ToList();
             if (!string.IsNullOrEmpty(search))
             {
                 search = search.ToLower();
                 homeVM.Books = _unitOfWork.BookRepository.GetAll(includeProperty:"BookCategories.Category").Where(b => b.Title.ToLower().Contains(search) || b.Author.ToLower().Contains(search)).ToList();
-                return View(homeVM);
+                homeVM.Search = search;
             }
-            if (cateID != 0 && cateID != null)
+            if (!string.IsNullOrEmpty(sort))
             {
+                if (sort == "ViewAll")
+                {
+                    return RedirectToAction(nameof(Index));
+                }
                 List<Book> books = _unitOfWork.BookRepository.GetAll(includeProperty: "BookCategories.Category").ToList();
-                List<int> bookIDs = _unitOfWork.BookCategoryRepository.GetAll().Where(bc => bc.CategoryId == cateID).Select(bc => bc.BookId).ToList();
+                List<int> bookIDs = _unitOfWork.BookCategoryRepository.GetAll().Where(bc => bc.Category.Name == sort).Select(bc => bc.BookId).ToList();
                 homeVM.Books = books.Where(b => bookIDs.Contains(b.ID)).ToList();
-                return View(homeVM);
+                homeVM.Sort = sort;
             }
-            homeVM.Books = _unitOfWork.BookRepository.GetAll(includeProperty: "BookCategories.Category").ToList();
+            var totalRecords = homeVM.Books.Count;
+            var totalPages = (totalRecords + pageSize - 1) / pageSize;
+            homeVM.Books = homeVM.Books.Skip((currentPage-1)*pageSize).Take(pageSize).ToList();
+            homeVM.CurrentPage = currentPage;
+            homeVM.TotalPages = totalPages;
+            homeVM.PageSize = pageSize;
             return View(homeVM);
         }
 
