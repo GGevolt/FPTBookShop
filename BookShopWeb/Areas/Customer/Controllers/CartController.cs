@@ -88,7 +88,7 @@ namespace FPTBookShopWeb.Areas.Customer.Controllers
 			{
 				if (cart.Count > cart.book.Quantity) {
                     _unitOfWork.ShoppingcartRepository.Remove(cart);
-                    TempData["error"] = "Out of stock, Sombody already order the last stock";
+                    TempData["error"] = $"{cart.book.Title} is out of stock, Sombody already order the last stock";
                     _unitOfWork.Save();
                     return RedirectToAction(nameof(Index));
                 }
