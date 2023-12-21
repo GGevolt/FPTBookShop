@@ -46,53 +46,91 @@
         </div>
     </form>
 </div>
+<section>
+    <div class="container">
+        <nav aria-label="Page navigation" style="margin: auto; width: 50px;">
+            <ul class="pagination">
+                @if (Model.CurrentPage > 1)
+                {
+                    <li class="page-item">
+                        <a class="page-link" asp-route-search="@Model.Search" asp-route-sort="@Model.Sort" asp-route-currentPage="@(Model.CurrentPage-1)" aria-label="Previous">
+                            <span aria-hidden="true">Previous</span>
+                        </a>
+                    </li>
+                }
+                @for (int i = 1; i <= Model.TotalPages; i++)
+                {
+                    @if (i == Model.CurrentPage)
+                    {
+                        <li class="page-item active"><a class="page-link active" asp-route-search="@Model.Search" asp-route-sort="@Model.Sort" asp-route-currentPage="@i" aria-disabled="true">@i</a></li>
+                    }
+                    else
+                    {
+                        <li class="page-item"><a class="page-link" asp-route-search="@Model.Search" asp-route-sort="@Model.Sort" asp-route-currentPage="@i">@i</a></li>
+                    }
+                }
+                @if (Model.CurrentPage < Model.TotalPages)
+                {
+                    <li class="page-item">
+                        <a class="page-link" asp-route-search="@Model.Search" asp-route-sort="@Model.Sort" asp-route-currentPage="@(Model.CurrentPage+1)" aria-label="Next">
+                            <span aria-hidden="true">Next</span>
+                        </a>
+                    </li>
+                }
+            </ul>
+        </nav>
+    </div>
+</section>
 <section class="section">
-    <nav aria-label="Page navigation" style="float: right; margin-right: 2%;">
-        <ul class="pagination">
-            @if (Model.CurrentPage > 1)
-            {
-                <li class="page-item">
-                    <a class="page-link" asp-route-search="@Model.Search" asp-route-sort="@Model.Sort" asp-route-currentPage="@(Model.CurrentPage-1)" aria-label="Previous">
-                        <span aria-hidden="true">Previous</span>
-                    </a>
-                </li>
-            }
-            @for (int i = 1; i <= Model.TotalPages; i++)
-            {
-                @if (i == Model.CurrentPage)
-                {
-                    <li class="page-item active"><a class="page-link active" asp-route-search="@Model.Search" asp-route-sort="@Model.Sort" asp-route-currentPage="@i" aria-disabled="true">@i</a></li>
-                }
-                else
-                {
-                    <li class="page-item"><a class="page-link" asp-route-search="@Model.Search" asp-route-sort="@Model.Sort" asp-route-currentPage="@i">@i</a></li>
-                }
-            }
-            @if (Model.CurrentPage < Model.TotalPages)
-            {
-                <li class="page-item">
-                    <a class="page-link" asp-route-search="@Model.Search" asp-route-sort="@Model.Sort" asp-route-currentPage="@(Model.CurrentPage+1)" aria-label="Next">
-                        <span aria-hidden="true">Next</span>
-                    </a>
-                </li>
-            }
-        </ul>
-    </nav>
     <div class="container">
         <div class="row g-3 g-lg-4">
-            @foreach (var Book in Model.Books){
+            @foreach (var Book in Model.Books)
+            {
                 <div class="card col-2">
                     <img src="@Book.Book_Image" class="card-img-top" alt="Book image" style="width: 12rem; height: 300px;">
-                  <div class="card-body">
-                    <h5 class="card-title">@Book.Title</h5>
-                    <p class="card-text">@Book.Description</p>
-                    <h6 class="card-title">Price: @Book.Price $</h6>
-                        <a asp-area="Customer" asp-controller="Home" asp-action="Detail" asp-route-id="@Book.ID" class="btn btn-primary">Detail</a>        
-                  </div>
+                    <div class="card-body">
+                        <h5 class="card-title">@Book.Title</h5>
+                        <p class="card-text">@Book.Description</p>
+                        <h6 class="card-title">Price: @Book.Price $</h6>
+                        <a asp-area="Customer" asp-controller="Home" asp-action="Detail" asp-route-id="@Book.ID" class="btn btn-primary">Detail</a>
+                    </div>
                 </div>
-             }
+            }
         </div>
     </div>
- </section>
-
-
+</section>
+<section >
+    <div class="container">
+        <nav aria-label="Page navigation" style="margin: auto; width: 50px; padding-top: 20px">
+            <ul class="pagination">
+                @if (Model.CurrentPage > 1)
+                {
+                    <li class="page-item">
+                        <a class="page-link" asp-route-search="@Model.Search" asp-route-sort="@Model.Sort" asp-route-currentPage="@(Model.CurrentPage-1)" aria-label="Previous">
+                            <span aria-hidden="true">Previous</span>
+                        </a>
+                    </li>
+                }
+                @for (int i = 1; i <= Model.TotalPages; i++)
+                {
+                    @if (i == Model.CurrentPage)
+                    {
+                        <li class="page-item active"><a class="page-link active" asp-route-search="@Model.Search" asp-route-sort="@Model.Sort" asp-route-currentPage="@i" aria-disabled="true">@i</a></li>
+                    }
+                    else
+                    {
+                        <li class="page-item"><a class="page-link" asp-route-search="@Model.Search" asp-route-sort="@Model.Sort" asp-route-currentPage="@i">@i</a></li>
+                    }
+                }
+                @if (Model.CurrentPage < Model.TotalPages)
+                {
+                    <li class="page-item">
+                        <a class="page-link" asp-route-search="@Model.Search" asp-route-sort="@Model.Sort" asp-route-currentPage="@(Model.CurrentPage+1)" aria-label="Next">
+                            <span aria-hidden="true">Next</span>
+                        </a>
+                    </li>
+                }
+            </ul>
+        </nav>
+    </div>
+</section>
