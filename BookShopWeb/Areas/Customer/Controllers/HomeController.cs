@@ -24,7 +24,7 @@ namespace FPTBookShopWeb.Areas.Customer.Controllers
         [HttpGet]
         public IActionResult Index(string? search, string? sort, int currentPage =1)
         {
-            int pageSize = 6;
+            int pageSize = 12;
             HomeVM homeVM = new HomeVM() {
                 Categories = _unitOfWork.CategoryRepository.GetAll().ToList()
             };
