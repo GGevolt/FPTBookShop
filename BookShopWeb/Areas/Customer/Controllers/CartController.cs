@@ -32,8 +32,18 @@ namespace FPTBookShopWeb.Areas.Customer.Controllers
 			};
 			foreach (var cart in ShoppingcartVM.ShoppingcartList)
 			{
-				cart.Price = PriceofBook(cart);
-				ShoppingcartVM.OrderHeader.OrderTotal += (cart.Price * cart.Count);
+				if (cart.book == null)
+				{
+					_unitOfWork.ShoppingcartRepository.Remove(cart);
+                    _unitOfWork.Save();
+                    TempData["error"] = $"{cart.book.Title} is deleted";
+
+                }
+				else
+				{
+					cart.Price = PriceofBook(cart);
+					ShoppingcartVM.OrderHeader.OrderTotal += (cart.Price * cart.Count);
+				}
 			}
 			return View(ShoppingcartVM);
 		}
@@ -54,9 +64,19 @@ namespace FPTBookShopWeb.Areas.Customer.Controllers
 			ShoppingcartVM.OrderHeader.City = ShoppingcartVM.OrderHeader.User.City;
 			foreach (var cart in ShoppingcartVM.ShoppingcartList)
 			{
-				cart.Price = PriceofBook(cart);
-				ShoppingcartVM.OrderHeader.OrderTotal += (cart.Price * cart.Count);
-			}
+                if (cart.book == null)
+                {
+                    _unitOfWork.ShoppingcartRepository.Remove(cart);
+                    _unitOfWork.Save();
+                    TempData["error"] = $"{cart.book.Title} is deleted";
+
+                }
+                else
+                {
+                    cart.Price = PriceofBook(cart);
+                    ShoppingcartVM.OrderHeader.OrderTotal += (cart.Price * cart.Count);
+                }
+            }
 			return View(ShoppingcartVM);
 		}
 		[HttpPost]
@@ -74,8 +94,18 @@ namespace FPTBookShopWeb.Areas.Customer.Controllers
 
 			foreach (var cart in ShoppingcartVM.ShoppingcartList)
 			{
-				cart.Price = PriceofBook(cart);
-				ShoppingcartVM.OrderHeader.OrderTotal += (cart.Price * cart.Count);
+                if (cart.book == null)
+                {
+                    _unitOfWork.ShoppingcartRepository.Remove(cart);
+                    _unitOfWork.Save();
+                    TempData["error"] = $"{cart.book.Title} is deleted";
+
+                }
+                else
+                {
+                    cart.Price = PriceofBook(cart);
+                    ShoppingcartVM.OrderHeader.OrderTotal += (cart.Price * cart.Count);
+                }
             }
 
 			ShoppingcartVM.OrderHeader.PaymentStatus = SD.PaymentStatusApprove;
@@ -86,9 +116,17 @@ namespace FPTBookShopWeb.Areas.Customer.Controllers
 
 			foreach (var cart in ShoppingcartVM.ShoppingcartList)
 			{
-				if (cart.Count > cart.book.Quantity) {
+                if (cart.book == null)
+                {
                     _unitOfWork.ShoppingcartRepository.Remove(cart);
-                    TempData["error"] = "Out of stock, Sombody already order the last stock";
+                    _unitOfWork.Save();
+                    TempData["error"] = $"{cart.book.Title} is deleted";
+                    return RedirectToAction(nameof(Index));
+
+                }
+                if (cart.Count > cart.book.Quantity) {
+                    _unitOfWork.ShoppingcartRepository.Remove(cart);
+                    TempData["error"] = $"{cart.book.Title} is out of stock, Sombody already order the last stock";
                     _unitOfWork.Save();
                     return RedirectToAction(nameof(Index));
                 }
