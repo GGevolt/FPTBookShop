@@ -8,67 +8,56 @@
             </a>
         </div>
     </div>
-    <div class="container p-3 my-5  bg-light text-dark">
-        <div class="row d-flex" style="margin-left: 82px; margin-right: 82px;">
-            <div class="col-md-4">
-                <img src="@Model.book.Book_Image" width="90%" height="100%" alt="Book image" />
+
+    <div class="row d-flex" style="margin-left: 82px; margin-right: 82px;">
+        <div class="col-md-4">
+            <img src="@Model.book.Book_Image" width="100%" alt="Book image" />
+        </div>
+        <div class="col-md-6">
+            <div class="row mb-3">
+                <h2>@Model.book.Title</h2>
             </div>
-            <div class="col-md-6">
-                <div class="row mb-3">
-                    <h2>@Model.book.Title</h2>
-                </div>
-                <div class="mb-3">
-                    <h5 style="display: inline-block;">Categories: </h5>
-                    @if (Model.book.BookCategories != null)
+            <div class="mb-3">
+                <h5 style="display: inline-block;">Categories: </h5>
+                @if (Model.book.BookCategories != null)
+                {
+                    @foreach (var category in Model.book.BookCategories.Select(bc => bc.Category))
                     {
-                        @foreach (var category in Model.book.BookCategories.Select(bc => bc.Category))
+                        <a>@category.Name</a>
+                        @if (category != Model.book.BookCategories.Last().Category)
                         {
-                            <a>@category.Name</a>
-                            @if (category != Model.book.BookCategories.Last().Category)
-                            {
-                                <span>, </span>
-                            }
+                            <span>, </span>
                         }
                     }
-                </div>
-                <div class="mb-3">
-                    <h5 style="display: inline-block;">Description: </h5> 
-                    <div class="description-wrapper">
-                        <a>@Model.book.Description</a>
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <h5>Price: <a style="color:red">@Model.book.Price$</a></h5>
-                </div>
-                <div class="row mb-3">
-                    <h5 style="display: inline-block;">Books left: @Model.book.Quantity</h5>
-                </div>
-                @if (Model.book.Quantity == 0)
-                {
-                    <span class="btn btn-danger">Out of stock</span>
-                }
-                else
-                {
-                    <form method="post">
-                        <input hidden asp-for="BookID" />
-                        <div class="row pl-2 mb-3">
-                            <div class="input-group mb-3">
-                                <span class="input-group-text bg-primary text-black border-0 fw-semibold" id="inputGroup-sizing-default">
-                                    Count
-                                </span>
-                                <input asp-for="Count" type="number" value="1" class="form-control text-end" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" min="1" max="@Model.book.Quantity" />
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-12 col-md-6 pb-1">
-                                <button type="submit" class="btn btn-primary bg-gradient w-100 py-2 text-uppercase fw-semibold">
-                                    Add to cart
-                                </button>
-                            </div>
-                        </div>
-                    </form>
                 }
             </div>
+            <div class="mb-3 description-wrapper">
+                <h5 style="display: inline-block;">Description: </h5>@Model.book.Description
+            </div>
+            <div class="row mb-3">
+                <h5>Price: <a style="color:red">@Model.book.Price$</a></h5>
+            </div>
+            <div class="row mb-3">
+                <h5 style="display: inline-block;">Books left: @Model.book.Quantity</h5>
+            </div>
+            <form method="post">
+                <input hidden asp-for="BookID" />
+                <div class="row pl-2 mb-3">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text bg-primary text-black border-0 fw-semibold" id="inputGroup-sizing-default">
+                            Count
+                        </span>
+                        <input asp-for="Count" type="number" value="1" class="form-control text-end" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-md-6 pb-1">
+                        <button type="submit" class="btn btn-primary bg-gradient w-100 py-2 text-uppercase fw-semibold">
+                            Add to cart
+                        </button>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
-</div>        
+</div>

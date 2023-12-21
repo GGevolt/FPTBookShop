@@ -69,11 +69,10 @@ body {
 }
 
 .description-wrapper {
-    display: -webkit-box;
-    -webkit-line-clamp: 10; /* Adjust the number of lines as needed */
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    vertical-align: top;
+    display: block;
+    overflow: hidden; 
+    max-height: 100px; 
+    word-wrap: break-word; 
 }
 
 .description-limiter {
