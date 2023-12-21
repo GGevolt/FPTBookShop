@@ -64,9 +64,19 @@ namespace FPTBookShopWeb.Areas.Customer.Controllers
 			ShoppingcartVM.OrderHeader.City = ShoppingcartVM.OrderHeader.User.City;
 			foreach (var cart in ShoppingcartVM.ShoppingcartList)
 			{
-				cart.Price = PriceofBook(cart);
-				ShoppingcartVM.OrderHeader.OrderTotal += (cart.Price * cart.Count);
-			}
+                if (cart.book == null)
+                {
+                    _unitOfWork.ShoppingcartRepository.Remove(cart);
+                    _unitOfWork.Save();
+                    TempData["error"] = $"{cart.book.Title} is deleted";
+
+                }
+                else
+                {
+                    cart.Price = PriceofBook(cart);
+                    ShoppingcartVM.OrderHeader.OrderTotal += (cart.Price * cart.Count);
+                }
+            }
 			return View(ShoppingcartVM);
 		}
 		[HttpPost]
