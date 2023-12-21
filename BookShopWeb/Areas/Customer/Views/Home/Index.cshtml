@@ -4,32 +4,27 @@
 }
 <partial name="_Notification" />
 <div class="banner">
-    <form method="get" style="align-items: center; justify-content: center; display: flex">
-        <div class="row">
-            <div class="col-md-8">
-                <input name="search" class="form-control" placeholder="Search by Title, Author">
-            </div>
-            <div class="col-md-4">
-                <button type="submit" class="btn-info" style="border-radius: 5px; height: 38px;">Search</button>
-            </div>
-        </div>
-    </form>
-</div>
     <div class="row g-3 g-lg-4">
         <div class="col-md-3">
             <div class="category-wrapper">
                 <div class="btn-group">
-                <button type="button" class="dropdown-toggle btn-outline-primary border-1 fw-normal" data-bs-toggle="dropdown" aria-expanded="false" style="border-radius: 5px;">
+                    <button type="button" class="dropdown-toggle btn-outline-primary border-1 fw-normal" data-bs-toggle="dropdown" aria-expanded="false" style="border-radius: 5px;">
                         Category
                     </button>
                     <ul class="dropdown-menu shadow-sm overflow-y-auto" style="max-height: 100%px; border-radius: 5px;">
                         @if (Model.Categories != null)
                         {
+                            <form method="get">
+                            <li>
+                                <input type="hidden" name="sort" value="ViewAll" />
+                                <button type="submit" class="dropdown-item border-0 fw-normal">View All</button>
+                            </li>
+                            </form>
                             @foreach (var cate in Model.Categories)
                             {
                                 <form method="get">
                                 <li>
-                                    <input type="hidden" name="cateID" value="@cate.ID" />
+                                    <input type="hidden" name="sort" value="@cate.Name" />
                                     <button type="submit" class="dropdown-item border-0 fw-normal">@cate.Name</button>
                                 </li>
                                 </form>
@@ -40,7 +35,49 @@
             </div>
         </div>
     </div>
+    <form method="get" style="margin-left: 2%;">
+        <div class="row">
+            <div class="col-md-8">
+                <input name="search" class="form-control" placeholder="Search by Title, Author">
+            </div>
+            <div class="col-md-4">
+                <button type="submit" class="btn-info" style="border-radius: 5px; height: 38px;">Search</button>
+            </div>
+        </div>
+    </form>
+</div>
 <section class="section">
+    <nav aria-label="Page navigation" style="float: right; margin-right: 2%;">
+        <ul class="pagination">
+            @if (Model.CurrentPage > 1)
+            {
+                <li class="page-item">
+                    <a class="page-link" asp-route-search="@Model.Search" asp-route-sort="@Model.Sort" asp-route-currentPage="@(Model.CurrentPage-1)" aria-label="Previous">
+                        <span aria-hidden="true">Previous</span>
+                    </a>
+                </li>
+            }
+            @for (int i = 1; i <= Model.TotalPages; i++)
+            {
+                @if (i == Model.CurrentPage)
+                {
+                    <li class="page-item active"><a class="page-link active" asp-route-search="@Model.Search" asp-route-sort="@Model.Sort" asp-route-currentPage="@i" aria-disabled="true">@i</a></li>
+                }
+                else
+                {
+                    <li class="page-item"><a class="page-link" asp-route-search="@Model.Search" asp-route-sort="@Model.Sort" asp-route-currentPage="@i">@i</a></li>
+                }
+            }
+            @if (Model.CurrentPage < Model.TotalPages)
+            {
+                <li class="page-item">
+                    <a class="page-link" asp-route-search="@Model.Search" asp-route-sort="@Model.Sort" asp-route-currentPage="@(Model.CurrentPage+1)" aria-label="Next">
+                        <span aria-hidden="true">Next</span>
+                    </a>
+                </li>
+            }
+        </ul>
+    </nav>
     <div class="container">
         <div class="row g-3 g-lg-4">
             @foreach (var Book in Model.Books){
@@ -57,5 +94,5 @@
         </div>
     </div>
  </section>
-}
+
 

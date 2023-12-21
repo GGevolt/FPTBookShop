@@ -38,9 +38,10 @@ body {
     background-position: top;
     padding: 0;
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
     height: 80px;
+    margin-bottom: 30px;
 }
 
 .nav-link {
