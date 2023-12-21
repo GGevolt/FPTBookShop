@@ -20,14 +20,15 @@
 			@foreach (var request in Model)
 			{
 				<tr>
-					<td>@request.Request_Name</td>
-					<td>@request.Request_Description</td>
-					<td>@request.Request_Date</td>
-					<td>@request.Status</td>
-					<td>
-						<div class="btn group" role="group">
-							@if (request.Status.Equals("Pending"))
-							{
+					@if (request.Status.Equals("Pending"))
+					{
+						<td>@request.Request_Name</td>
+						<td>@request.Request_Description</td>
+						<td>@request.Request_Date</td>
+						<td>@request.Status</td>
+						<td>
+							<div class="btn group" role="group">
+
 								@using (Html.BeginForm("ApproveRequest", "CategoryApproval"))
 								{
 									@Html.Hidden("id", @request.ID)
@@ -42,9 +43,9 @@
 										<i class="bi bi-pencil"></i> Reject
 									</button>
 								}
-							}
-						</div>
-					</td>
+							</div>
+						</td>
+					}
 				</tr>
 			}
 		</tbody>
