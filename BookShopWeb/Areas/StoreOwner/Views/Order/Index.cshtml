@@ -1,46 +1,66 @@
 ﻿@model OrderVM
 <partial name="_Notification" />
-<div class="row pt-4 pb-4">
-	<div class="col-9">
-		<h2>List of Order</h2>
-	</div>
-</div>
 <div class="container">
-	<table class="table table-bordered">
-		<thead>
-			<tr>
-				<th>Name</th>
-				<th>Phone</th>
-				<th>Address</th>
-				<th>City</th>
-				<th>Order Status</th>
-				<th>Order Total</th>
-				<th>Date Order</th>
-				<th>Books Ordered</th>
-			</tr>
-		</thead>
-		<tbody>
-			@foreach (var orderHeader in Model.OrderHeaderes)
+	<div class="card">
+		<div class="card-header">
+			<h2>List of Order</h2>
+		</div>
+		<div class="card-body">
+			@if (ViewBag.TotalPages > 1)
 			{
-				<tr>
-					<td>@orderHeader.Name</td>
-					<td>@orderHeader.PhoneNumber</td>
-					<td>@orderHeader.Address</td>
-					<td>@orderHeader.City</td>
-					<td>@orderHeader.OrderStatus</td>
-					<td>@orderHeader.OrderTotal</td>
-					<td>@orderHeader.OrderDate</td>
-					<td>
-						<ul>
-							@foreach (var orderDetail in Model.OrderDetailes.Where(o => o.OrderHeaderID == orderHeader.Id))
-							{
-								<li>Title: @orderDetail.book.Title</li>
-								<li>Book count: @orderDetail.Count</li>
-							}
-						</ul>
-					</td>
-				</tr>
+				<nav aria-label="Page navigation example">
+					<ul class="pagination justify-content-center pt-3">
+						@if (ViewBag.CurrentPage > 1)
+						{
+							<li class="page-item"><a class="page-link" asp-controller="Order" asp-action="Index" asp-route-currentPage="@(ViewBag.CurrentPage - 1)">Previous</a></li>
+						}
+						@for (int i = 1; i <= ViewBag.TotalPages; i++)
+						{
+							<li class="page-item @(i == ViewBag.CurrentPage ? "active" : "")"><a class="page-link" asp-controller="Order" asp-action="Index" asp-route-currentPage="@i">@i</a></li>
+						}
+						@if (ViewBag.CurrentPage < ViewBag.TotalPages)
+						{
+							<li class="page-item"><a class="page-link" asp-controller="Order" asp-action="Index" asp-route-currentPage="@(ViewBag.CurrentPage + 1)">Next</a></li>
+						}
+					</ul>
+				</nav>
 			}
-		</tbody>
-	</table>
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Phone</th>
+						<th>Address</th>
+						<th>City</th>
+						<th>Order Status</th>
+						<th>Order Total</th>
+						<th>Date Order</th>
+						<th>Books Ordered</th>
+					</tr>
+				</thead>
+				<tbody>
+					@foreach (var orderHeader in Model.OrderHeaderes)
+					{
+						<tr>
+							<td>@orderHeader.Name</td>
+							<td>@orderHeader.PhoneNumber</td>
+							<td>@orderHeader.Address</td>
+							<td>@orderHeader.City</td>
+							<td>@orderHeader.OrderStatus</td>
+							<td style="color:red">@orderHeader.OrderTotal$</td>
+							<td>@orderHeader.OrderDate</td>
+							<td>
+								<ul>
+									@foreach (var orderDetail in Model.OrderDetailes.Where(o => o.OrderHeaderID == orderHeader.Id))
+									{
+										<li>@orderDetail.book.Title (@orderDetail.Count)</li>
+									}
+								</ul>
+							</td>
+						</tr>
+					}
+				</tbody>
+			</table>
+		</div>
+	</div>
 </div>
