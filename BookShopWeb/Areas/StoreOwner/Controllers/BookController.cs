@@ -22,12 +22,27 @@ namespace FPTBookShopWeb.Areas.StoreOwner.Controllers
             _unitOfWork = unitOfWork;
             _webhost = webhost;
         }
-        public IActionResult Index()
-        {
-            List<Book> books = _unitOfWork.BookRepository.GetAll(includeProperty: "BookCategories.Category").ToList();
-            return View(books);
-        }
-        public IActionResult CreateUpdate(int? id)
+		public IActionResult Index(int currentPage = 1) 
+		{
+			const int pageSize = 5;
+			int totalRecords = _unitOfWork.BookRepository.GetAll().Count();
+			int totalPages = (totalRecords + pageSize - 1) / pageSize;
+
+			// Ensure currentPage is within valid range
+			currentPage = Math.Max(1, Math.Min(currentPage, totalPages));
+
+			var books = _unitOfWork.BookRepository.GetAll(includeProperty: "BookCategories.Category")
+							.Skip((currentPage - 1) * pageSize)
+							.Take(pageSize)
+							.ToList();
+
+			ViewBag.CurrentPage = currentPage;
+			ViewBag.TotalPages = totalPages;
+			ViewBag.PageSize = pageSize;
+
+			return View(books);
+		}
+		public IActionResult CreateUpdate(int? id)
         {
             if (id == null || id == 0)
             {
@@ -168,6 +183,5 @@ namespace FPTBookShopWeb.Areas.StoreOwner.Controllers
             TempData["success"] = "Book deleted succesfully";
             return RedirectToAction("Index");
         }
-
     }
 }

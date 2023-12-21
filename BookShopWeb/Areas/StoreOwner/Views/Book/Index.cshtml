@@ -5,7 +5,7 @@
         <div class="col-9">
             <h1>Manage Books</h1>
         </div>
-        <div class="col-3" style="margin-top: 10px">
+        <div class="col-3 d-flex justify-content-end align-items-center">
             <a asp-controller="Book" asp-action="CreateUpdate" class="btn btn-primary">Create New Book</a>
         </div>
     </div>
@@ -16,6 +16,25 @@
         <div class="card-header">
             <h2>Book List</h2>
         </div>
+        @if (ViewBag.TotalPages > 1)
+        {
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center pt-3">
+                    @if (ViewBag.CurrentPage > 1)
+                    {
+                        <li class="page-item"><a class="page-link" asp-controller="Book" asp-action="Index" asp-route-currentPage="@(ViewBag.CurrentPage - 1)">Previous</a></li>
+                    }
+                    @for (int i = 1; i <= ViewBag.TotalPages; i++)
+                    {
+                        <li class="page-item @(i == ViewBag.CurrentPage ? "active" : "")"><a class="page-link" asp-controller="Book" asp-action="Index" asp-route-currentPage="@i">@i</a></li>
+                    }
+                    @if (ViewBag.CurrentPage < ViewBag.TotalPages)
+                    {
+                        <li class="page-item"><a class="page-link" asp-controller="Book" asp-action="Index" asp-route-currentPage="@(ViewBag.CurrentPage + 1)">Next</a></li>
+                    }
+                </ul>
+            </nav>
+        }
         <div class="card-body">
             <table class="table table-bordered">
                 <thead>
@@ -59,5 +78,24 @@
                 </tbody>
             </table>
         </div>
+        @if (ViewBag.TotalPages > 1)
+        {
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+                    @if (ViewBag.CurrentPage > 1)
+                    {
+                        <li class="page-item"><a class="page-link" asp-controller="Book" asp-action="Index" asp-route-currentPage="@(ViewBag.CurrentPage - 1)">Previous</a></li>
+                    }
+                    @for (int i = 1; i <= ViewBag.TotalPages; i++)
+                    {
+                        <li class="page-item @(i == ViewBag.CurrentPage ? "active" : "")"><a class="page-link" asp-controller="Book" asp-action="Index" asp-route-currentPage="@i">@i</a></li>
+                    }
+                    @if (ViewBag.CurrentPage < ViewBag.TotalPages)
+                    {
+                        <li class="page-item"><a class="page-link" asp-controller="Book" asp-action="Index" asp-route-currentPage="@(ViewBag.CurrentPage + 1)">Next</a></li>
+                    }
+                </ul>
+            </nav>
+        }
     </div>
 </div>

@@ -1,52 +1,54 @@
 ﻿@model List<Request>
 <partial name="_Notification" />
-<div class="row pt-4 pb-4">
-	<div class="col-9">
-		<h2>List of Requests</h2>
+<div class="container">
+	<div class="row pt-4 pb-4">
+		<div class="col-9">
+			<h2>List of Requests</h2>
+		</div>
 	</div>
-</div>
-<div>
-	<table class="table table-bordered">
-		<thead>
-			<tr>
-				<th>Request Name</th>
-				<th>Request Description</th>
-				<th>Request Date</th>
-				<th>Status</th>
-				<th>Approval</th>
-			</tr>
-		</thead>
-		<tbody>
-			@foreach (var request in Model)
-			{
+	<div>
+		<table class="table table-bordered">
+			<thead>
 				<tr>
-					<td>@request.Request_Name</td>
-					<td>@request.Request_Description</td>
-					<td>@request.Request_Date</td>
-					<td>@request.Status</td>
-					<td>
-						<div class="btn group" role="group">
-							@if (request.Status.Equals("Pending"))
-							{
-								@using (Html.BeginForm("ApproveRequest", "CategoryApproval"))
-								{
-									@Html.Hidden("id", @request.ID)
-									<button type="submit" class="btn btn-primary">
-										<i class="bi bi-pencil"></i> Approve
-									</button>
-								}
-								@using (Html.BeginForm("RejectRequest", "CategoryApproval"))
-								{
-									@Html.Hidden("id", @request.ID)
-									<button type="submit" class="btn btn-danger">
-										<i class="bi bi-pencil"></i> Reject
-									</button>
-								}
-							}
-						</div>
-					</td>
+					<th>Request Name</th>
+					<th>Request Description</th>
+					<th>Request Date</th>
+					<th>Status</th>
+					<th>Approval</th>
 				</tr>
-			}
-		</tbody>
-	</table>
+			</thead>
+			<tbody>
+				@foreach (var request in Model)
+				{
+					<tr>
+						<td>@request.Request_Name</td>
+						<td>@request.Request_Description</td>
+						<td>@request.Request_Date</td>
+						<td>@request.Status</td>
+						<td>
+							<div class="btn group" role="group">
+								@if (request.Status.Equals("Pending"))
+								{
+									@using (Html.BeginForm("ApproveRequest", "CategoryApproval"))
+									{
+										@Html.Hidden("id", @request.ID)
+										<button type="submit" class="btn btn-primary">
+											<i class="bi bi-pencil"></i> Approve
+										</button>
+									}
+									@using (Html.BeginForm("RejectRequest", "CategoryApproval"))
+									{
+										@Html.Hidden("id", @request.ID)
+										<button type="submit" class="btn btn-danger">
+											<i class="bi bi-pencil"></i> Reject
+										</button>
+									}
+								}
+							</div>
+						</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+	</div>
 </div>
