@@ -55,14 +55,17 @@
                     <li class="page-item">
                         <a class="page-link" asp-route-search="@Model.Search" asp-route-sort="@Model.Sort" asp-route-currentPage="@(Model.CurrentPage-1)" aria-label="Previous">
                             <span aria-hidden="true">Previous</span>
-                    </a>
-                </li>
+                        </a>
+                    </li>
                 }
-                @for(int i =1; i <= Model.TotalPages;i++){
+                @for (int i = 1; i <= Model.TotalPages; i++)
+                {
                     @if (i == Model.CurrentPage)
                     {
                         <li class="page-item active"><a class="page-link active" asp-route-search="@Model.Search" asp-route-sort="@Model.Sort" asp-route-currentPage="@i" aria-disabled="true">@i</a></li>
-                    }else{
+                    }
+                    else
+                    {
                         <li class="page-item"><a class="page-link" asp-route-search="@Model.Search" asp-route-sort="@Model.Sort" asp-route-currentPage="@i">@i</a></li>
                     }
                 }
@@ -79,17 +82,21 @@
     </div>
     <div class="container col-12" id="product">
         <div class="row g-3 g-lg-4">
-            @foreach (var Book in Model.Books){
-                <div class="card col-2">
-                    <img src="@Book.Book_Image" class="card-img-top" alt="Book image" id="bookimg">
-                  <div class="card-body">
-                    <h5 class="card-title">@Book.Title</h5>
-                    <p class="card-text">@Book.Description</p>
+            @foreach (var Book in Model.Books)
+            {
+                <div class="card col-2" style="border:hidden">
+
+                    <img src="@Book.Book_Image" class="card-img-top" style="max-width: 100%; min-height:17rem ;max-height: 17rem;" alt="Book image" id="bookimg">
+                    <div class="card-body">
+                        <h5 class="card-title">@Book.Title</h5>
+                        <p class="card-text">@Book.Description</p>
+                    </div>
+                    <div class="card-footer" style="background-color:white; border-top:none">
                         <h6 class="card-title">Price: @Book.Price $</h6>
-                        <a asp-area="Customer" asp-controller="Home" asp-action="Detail" asp-route-id="@Book.ID" class="btn btn-primary" id="Bookdetail">Detail</a>        
-                  </div>
+                        <a asp-area="Customer" asp-controller="Home" asp-action="Detail" asp-route-id="@Book.ID" class="btn btn-primary" id="Bookdetail">Detail</a>
+                    </div>
                 </div>
-             }
+            }
         </div>
     </div>
 </section>
