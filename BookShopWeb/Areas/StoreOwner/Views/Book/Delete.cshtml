@@ -3,46 +3,52 @@
 <div class="container">
     <h1 class="text-center mt-4 mb-4">Delete a Book</h1>
 
-    <div class="card border-0 shadow-sm">
-        <div class="card-body">
-            <form method="post">
-                <input asp-for="ID" hidden />
+    <div class="row">
+        <div class="col-md-4 d-flex align-items-center justify-content-center">
+            <img src="@Model.Book_Image" class="img-fluid" alt="Book Image">
+        </div>
+        <div class="col-md-8">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                    <form method="post">
+                        <input asp-for="ID" hidden />
 
-                <div class="row">
-                    <div class="col-md-4">
-                        <label asp-for="Title" class="form-label"></label>
-                        <input asp-for="Title" class="form-control-plaintext" disabled>
-                    </div>
-                    <div class="col-md-4">
-                        <label asp-for="Author" class="form-label"></label>
-                        <input asp-for="Author" class="form-control-plaintext" disabled>
-                    </div>
-                    <div class="col-md-4">
-                        <label asp-for="Price" class="form-label"></label>
-                        <input asp-for="Price" class="form-control-plaintext" disabled>
-                    </div>
-                </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label asp-for="Title" class="form-label"></label>
+                                <input asp-for="Title" class="form-control-plaintext" disabled>
+                            </div>
+                            <div class="col-md-6">
+                                <label asp-for="Author" class="form-label"></label>
+                                <input asp-for="Author" class="form-control-plaintext" disabled>
+                            </div>
+                        </div>
 
-                <div class="row mt-3">
-                    <div class="col-md-6">
-                        <label asp-for="Description" class="form-label"></label>
-                        <input asp-for="Description" class="form-control-plaintext" disabled>
-                    </div>
-                    <div class="col-md-4">
-                        <label asp-for="Quantity" class="form-label"></label>
-                        <input asp-for="Quantity" class="form-control-plaintext" disabled>
-                    </div>
-                    <div class="col-md-2">
-                        <label asp-for="Book_Image" class="form-label"></label>
-                        <img src="@Model.Book_Image" class="img-fluid rounded mt-3" alt="Book Image">
-                    </div>
-                </div>
+                        <div class="row mt-3">
+                            <div class="col-md-6">
+                                <label asp-for="Description" class="form-label"></label>
+                                <input asp-for="Description" class="form-control-plaintext" disabled>
+                            </div>
+                            <div class="col-md-6">
+                                <label asp-for="Price" class="form-label"></label>
+                                <input asp-for="Price" class="form-control-plaintext" disabled>
+                            </div>
+                        </div>
 
-                <div class="text-center mt-4">
-                    <button type="submit" class="btn btn-danger">Delete</button>
-                    <a asp-controller="Book" asp-action="Index" class="btn btn-secondary">Back to List</a>
+                        <div class="row mt-3">
+                            <div class="col-md-4">
+                                <label asp-for="Quantity" class="form-label"></label>
+                                <input asp-for="Quantity" class="form-control-plaintext" disabled>
+                            </div>
+                        </div>
+
+                        <div class="text-center mt-4">
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                            <a asp-controller="Book" asp-action="Index" class="btn btn-secondary">Back to List</a>
+                        </div>
+                    </form>
                 </div>
-            </form>
+            </div>
         </div>
     </div>
 </div>
