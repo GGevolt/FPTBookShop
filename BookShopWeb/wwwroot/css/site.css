@@ -48,67 +48,26 @@ body {
     transition: all 0.3s ease;
 }
 
-#product {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 50px;
-}
 
-#card {
-    width: 24rem;
-    height: 36rem;
-    border-radius: 10px;
-    overflow: hidden;
-    cursor: pointer;
-    position: relative;
-    color: white;
-    box-shadow: 0 10px 30px 5px rgba(0, 0, 0, 0.2);
-}
-#bookimg {
-    position: absolute;
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    opacity: 0.9;
-    transition: opacity .2s ease-out;
-}
-
-#Booktitle {
-    position: absolute;
-    inset: auto auto 30px 30px;
-    margin: 0;
-    transition: inset .3s .3s ease-out;
-    font-weight: normal;
-    text-transform: uppercase;
-}
-
-.card-text{
-
-}
-
-/*.card-text {
+.card-text {
     display: -webkit-box;
-    -webkit-line-clamp: 2;*/ /* Show a maximum of 3 lines */
-    /*-webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;  Show a maximum of 3 lines 
+    -webkit-box-orient: vertical;
     overflow: hidden;
 }
 
 .card-title {
     display: -webkit-box;
-    -webkit-line-clamp: 1;*/ /* Adjust the number of lines as needed */
-    /*-webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;  Adjust the number of lines as needed 
+    -webkit-box-orient: vertical;
     overflow: hidden;
 }
 
 .card-body {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;*/ /* Align items at top and bottom */
-/*}*/
+    justify-content: space-between;  Align items at top and bottom 
+}
 
 .description-wrapper {
     display: block;
