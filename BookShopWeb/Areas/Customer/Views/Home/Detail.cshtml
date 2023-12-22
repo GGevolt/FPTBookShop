@@ -47,7 +47,7 @@
                             <span class="input-group-text bg-primary text-black border-0 fw-semibold" id="inputGroup-sizing-default">
                                 Count
                             </span>
-                            <input asp-for="Count" type="number" value="1" class="form-control text-end" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" />
+                            <input asp-for="Count" type="number" value="1" class="form-control text-end" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" min="1" max="@Model.book.Quantity" />
                         </div>
                     </div>
                     <div class="row">
