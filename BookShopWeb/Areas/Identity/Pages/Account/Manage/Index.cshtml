@@ -1,99 +1,101 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Profile";
-    ViewData["ActivePage"] = ManageNavPages.Index;
+	ViewData["Title"] = "Profile";
+	ViewData["ActivePage"] = ManageNavPages.Index;
 }
 
 <div class="container">
-    <div class="row">
-        <div class="col-md-6 offset-md-3">
-            <h3 class="mb-4">@ViewData["Title"]</h3>
-            <partial name="_StatusMessage" for="StatusMessage" />
+	<div class="row">
+		<div class="col-md-6 offset-md-3">
+			<h3 class="mb-4">@ViewData["Title"]</h3>
+			<partial name="_StatusMessage" for="StatusMessage" />
 
-            <form id="profile-form" method="post" class="mb-4">
-                <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+			<form id="profile-form" method="post" class="mb-4">
+				<div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
 
-                <div class="card border-0 shadow-sm">
-                    <div class="card-body">
-                        <div class="form-group">
-                            <label asp-for="Username" class="form-label">Username</label>
-                            <input asp-for="Username" class="form-control" placeholder="Please choose your username." disabled />
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="Input.Full_Name" class="form-label">Full Name</label>
-                            <input asp-for="Input.Full_Name" class="form-control" aria-required="true" />
-                            <span asp-validation-for="Input.Full_Name" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="Input.Address" class="form-label">Home Address</label>
-                            <input asp-for="Input.Address" class="form-control" aria-required="true" />
-                            <span asp-validation-for="Input.Address" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="Input.PhoneNumber" class="form-label">Phone Number</label>
-                            <input asp-for="Input.PhoneNumber" class="form-control" aria-required="true" />
-                            <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
-                        </div>
-                    </div>
-                    <div class="card-footer text-center">
-                        <button id="update-profile-button" type="submit" class="btn btn-primary">Save</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
+				<div class="card border-0 shadow-sm">
+					<div class="card-body">
+						<div class="form-group">
+							<label asp-for="Username" class="form-label">Username</label>
+							<input asp-for="Username" class="form-control" placeholder="Please choose your username." disabled />
+						</div>
+						<div class="form-group">
+							<label asp-for="Input.Full_Name" class="form-label">Full Name</label>
+							<input asp-for="Input.Full_Name" class="form-control" aria-required="true" />
+							<span asp-validation-for="Input.Full_Name" class="text-danger"></span>
+						</div>
+						<div class="form-group">
+							<label asp-for="Input.Address" class="form-label">Home Address</label>
+							<input asp-for="Input.Address" class="form-control" aria-required="true" />
+							<span asp-validation-for="Input.Address" class="text-danger"></span>
+						</div>
+						<div class="form-group">
+							<label asp-for="Input.PhoneNumber" class="form-label">Phone Number</label>
+							<input asp-for="Input.PhoneNumber" class="form-control" aria-required="true" />
+							<span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+						</div>
+					</div>
+					<div class="card-footer text-center">
+						<button id="update-profile-button" type="submit" class="btn btn-primary">Save</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
 </div>
 @if (User.IsInRole("Customer"))
 {
-	<div class="row pt-4 pb-4">
-		<div class="col-9">
-			<h2>List of Order</h2>
+	<div class="container">
+		<div class="row pt-4 pb-4">
+			<div class="col-9">
+				<h2>List of Order</h2>
+			</div>
 		</div>
-	</div>
-	<div>
-		<table class="table table-bordered">
-			<thead>
-				<tr>
-					<th>Name</th>
-					<th>Phone</th>
-					<th>Address</th>
-					<th>City</th>
-					<th>Order Status</th>
-					<th>Order Total</th>
-					<th>Date Order</th>
-					<th>Books Ordered</th>
-				</tr>
-			</thead>
-			<tbody>
-				@foreach (var orderHeader in Model.OrderVM.OrderHeaderes)
-				{
+		<div>
+			<table class="table table-bordered">
+				<thead>
 					<tr>
-						<td>@orderHeader.Name</td>
-						<td>@orderHeader.PhoneNumber</td>
-						<td>@orderHeader.Address</td>
-						<td>@orderHeader.City</td>
-						<td>@orderHeader.OrderStatus</td>
-						<td>@orderHeader.OrderTotal</td>
-						<td>@orderHeader.OrderDate</td>
-						<td>
-							<ul>
-								@foreach (var orderDetail in Model.OrderVM.OrderDetailes.Where(o => o.OrderHeaderID == orderHeader.Id))
-								{
-									<li>Title: @orderDetail.book.Title</li>
-									<li>Book count: @orderDetail.Count</li>
-								}
-							</ul>
-						</td>
+						<th>Name</th>
+						<th>Phone</th>
+						<th>Address</th>
+						<th>City</th>
+						<th>Order Status</th>
+						<th>Order Total</th>
+						<th>Date Order</th>
+						<th>Books Ordered</th>
 					</tr>
-				}
-			</tbody>
-		</table>
+				</thead>
+				<tbody>
+					@foreach (var orderHeader in Model.OrderVM.OrderHeaderes)
+					{
+						<tr>
+							<td>@orderHeader.Name</td>
+							<td>@orderHeader.PhoneNumber</td>
+							<td>@orderHeader.Address</td>
+							<td>@orderHeader.City</td>
+							<td>@orderHeader.OrderStatus</td>
+							<td>@orderHeader.OrderTotal</td>
+							<td>@orderHeader.OrderDate</td>
+							<td>
+								<ul>
+									@foreach (var orderDetail in Model.OrderVM.OrderDetailes.Where(o => o.OrderHeaderID == orderHeader.Id))
+									{
+										<li>Title: @orderDetail.book.Title</li>
+										<li>Book count: @orderDetail.Count</li>
+									}
+								</ul>
+							</td>
+						</tr>
+					}
+				</tbody>
+			</table>
+		</div>
 	</div>
 }
 
 @section Scripts {
-    @{
-        <partial name="_ValidationScriptsPartial" />
-    }
+	@{
+		<partial name="_ValidationScriptsPartial" />
+	}
 }
