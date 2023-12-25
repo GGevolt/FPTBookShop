@@ -81,7 +81,7 @@
 								<ul>
 									@foreach (var orderDetail in Model.OrderVM.OrderDetailes.Where(o => o.OrderHeaderID == orderHeader.Id))
 									{
-										<li>Title: @orderDetail.book.Title</li>
+										<li>Title: @orderDetail.Ordered_Book_Name</li>
 										<li>Book count: @orderDetail.Count</li>
 									}
 								</ul>

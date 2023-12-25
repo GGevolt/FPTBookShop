@@ -130,13 +130,15 @@ namespace FPTBookShopWeb.Areas.Customer.Controllers
                     _unitOfWork.Save();
                     return RedirectToAction(nameof(Index));
                 }
+				var book = _unitOfWork.BookRepository.Get(b => b.ID == cart.BookID);
 				OrderDetail orderDetail = new()
 				{
 					ProductID = cart.BookID,
 					OrderHeaderID = ShoppingcartVM.OrderHeader.Id,
 					Price = cart.Price,
-					Count = cart.Count
-				};
+					Count = cart.Count,
+					Ordered_Book_Name = book.Title
+                };
                 cart.book.Quantity -= cart.Count;
                 _unitOfWork.BookRepository.Update(cart.book);
                 _unitOfWork.OrderDetailRepository.Add(orderDetail);

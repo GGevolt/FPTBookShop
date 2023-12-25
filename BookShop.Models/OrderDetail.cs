@@ -19,9 +19,8 @@ namespace FPTBookShop.Models
         public OrderHeader OrderHeader { get; set; }
         [Required]
         public int ProductID { get; set; }
-        [ForeignKey("ProductID")]
-        [ValidateNever]
-        public Book book { get; set; }
+        public string? Ordered_Book_Name { get; set; }
+
         public int Count { get; set; }
         public double Price { get; set; }
 

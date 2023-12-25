@@ -74,7 +74,7 @@ namespace FPTBookShopWeb.Areas.Identity.Pages.Account.Manage
 			OrderVM = new OrderVM()
             {
                 OrderHeaderes = _unitOfWork.OrderHeaderRepository.GetAll().Where(r => r.UserId == user.Id).ToList(),
-                OrderDetailes = _unitOfWork.OrderDetailRepository.GetAll(includeProperty: "book").ToList()
+                OrderDetailes = _unitOfWork.OrderDetailRepository.GetAll().ToList()
             };
 
 
