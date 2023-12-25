@@ -40,24 +40,29 @@
                 <div class="row mb-3">
                     <h5 style="display: inline-block;">Books left: @Model.book.Quantity</h5>
                 </div>
-                <form method="post">
-                    <input hidden asp-for="BookID" />
-                    <div class="row pl-2 mb-3">
-                        <div class="input-group mb-3">
-                            <span class="input-group-text bg-primary text-black border-0 fw-semibold" id="inputGroup-sizing-default">
-                                Count
-                            </span>
-                            <input asp-for="Count" type="number" value="1" class="form-control text-end" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" min="1" max="@Model.book.Quantity" />
+                 @if (Model.book.Quantity == 0)
+                {
+                    <span class="btn btn-danger">Out of stock</span>
+                }else{
+                    <form method="post">
+                        <input hidden asp-for="BookID" />
+                        <div class="row pl-2 mb-3">
+                            <div class="input-group mb-3">
+                                <span class="input-group-text bg-primary text-black border-0 fw-semibold" id="inputGroup-sizing-default">
+                                    Count
+                                </span>
+                                <input asp-for="Count" type="number" value="1" class="form-control text-end" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" min="1" max="@Model.book.Quantity" />
+                            </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12 col-md-6 pb-1">
-                            <button type="submit" class="btn btn-primary bg-gradient w-100 py-2 text-uppercase fw-semibold">
-                                Add to cart
-                            </button>
+                        <div class="row">
+                            <div class="col-12 col-md-6 pb-1">
+                                <button type="submit" class="btn btn-primary bg-gradient w-100 py-2 text-uppercase fw-semibold">
+                                    Add to cart
+                                </button>
+                            </div>
                         </div>
-                    </div>
-                </form>
+                    </form>
+                }
             </div>
         </div>
     </div>

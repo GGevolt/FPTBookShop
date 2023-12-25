@@ -30,7 +30,7 @@ namespace FPTBookShopWeb.Areas.StoreOwner.Controllers
 								.Take(pageSize)
 								.ToList();
 
-			var orderDetails = _unitOfWork.OrderDetailRepository.GetAll(includeProperty: "book")
+			var orderDetails = _unitOfWork.OrderDetailRepository.GetAll()
 								.Where(od => orderHeaders.Any(oh => oh.Id == od.OrderHeaderID))
 								.ToList();
 
