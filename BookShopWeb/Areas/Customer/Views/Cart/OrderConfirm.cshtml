@@ -1,9 +1,11 @@
 ﻿@model int
 <div class="container">
-    <h1 class="text-primary">The Order Is Successfully Made</h1>
-    <h1 class="text-secondary">Thank you for your purchases</h1>
-    <h1 class="text-secondary">please buy more I need money to buy coffee</h1>
-    <a asp-controller="Home" asp-action="Index" class="btn btn-primary">
-        Back to Home
-    </a>
+    <div class="container p-3 my-5 bg-light">
+        <h1 class="display-4 text-primary">Order Successful</h1>
+        <span class="fa" style='font-size:100px;'>&#xf087; &#xf07a &#9989;</span>
+        <p class="lead">Thank you for your purchase!</p>
+        <p class="lead">We appreciate your business.</p>
+        <p class="lead">For any questions or assistance, please contact our support team at <a href="mailto:Vyptgcd210048@gmail.com">Vyptgcd210048@gmail.com</a>.</p>
+        <a asp-controller="Home" asp-action="Index" class="btn btn-primary">Back to Home</a>
+    </div>
 </div>
