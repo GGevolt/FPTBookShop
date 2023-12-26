@@ -4,17 +4,16 @@
     ViewData["Title"] = "Register confirmation";
 }
 
-<h1>@ViewData["Title"]</h1>
 @{
     if (@Model.DisplayConfirmAccountLink)
     {
-        <p class="container">
+        <p class="container text-center">
             <a id="confirm-link" href="@Model.EmailConfirmationUrl" style="font-size: 48px; display: inline-block; background-color: #4CAF50; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">Confirm Your Account</a>
         </p>
     }
     else
     {
-        <p> 
+        <p class="container text-center">
             Please check your email to confirm your account.
         </p>
     }
