@@ -62,9 +62,7 @@ namespace FPTBookShopWeb.Areas.StoreOwner.Controllers
                     Categories = _unitOfWork.CategoryRepository.GetAll().ToList(),
                     SelectedCategories = _unitOfWork.BookCategoryRepository.GetAll().Where(bc => bc.BookId == id).Select(bc => bc.CategoryId).ToList()
                 };
-                //Update a Book
-                bookUpdateVM.Book = _unitOfWork.BookRepository.Get(book => book.ID == id);
-
+                //Update Book
                 return View(bookUpdateVM);
             }
 

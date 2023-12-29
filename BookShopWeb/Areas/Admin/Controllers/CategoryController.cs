@@ -64,6 +64,11 @@ namespace FPTBookShopWeb.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Edit(Category category)
         {
+            if (category.Name == category.Description)
+            {
+                ModelState.AddModelError("Name", "Name cannot be equal to Description");
+            }
+
             if (ModelState.IsValid)
             {
                 _unitOfWork.CategoryRepository.Update(category);
